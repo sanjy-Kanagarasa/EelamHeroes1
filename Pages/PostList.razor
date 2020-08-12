@@ -1,0 +1,77 @@
+﻿@page "/category/{categoryId}"
+
+@using EelamHeroes.Data
+@using EelamHeroes.Models.Dto
+@using EelamHeroes.Models.Entity
+@using EelamHeroes.Repository.Interface
+@inject IPostRepository PostRepository
+
+
+@if (paginatedList == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="container">
+        <div class="intro">
+            <h2 class="text-center">Posts</h2>
+        </div>
+        <div class="row projects">
+            @foreach (var post in paginatedList.Items)
+            {
+                <div class="col-sm-6 col-lg-4 item">
+                    <a class="img-hover-zoom--brightness" href="post/@post.Id">
+                        <img class="img-card" src="@post.ImagePath" onerror="this.src='https://www.suntip.nl/assets/img/image-not-found.png'"/>
+                        <h3 class="name">@post.Title</h3>
+                        <p class="desc">@post.Title</p>
+                    </a>
+                </div>
+            }
+        </div>
+        <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
+               HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
+        </Pager>
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public string CategoryId { get; set; }
+    PagedListDto<Post> paginatedList;
+    int PageNr = 1;
+
+    //private IEnumerable<Post> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchData();
+    }
+    public async void PageIndexChanged(int newPageNumber)
+    {
+        if (newPageNumber < 1 || newPageNumber > paginatedList.TotalPages)
+        {
+            return;
+        }
+        PageNr = newPageNumber;
+        await FetchData();
+        StateHasChanged();
+    }
+
+    private async Task FetchData()
+    {
+        var result = await PostRepository.GetPostsByCategory(int.Parse(CategoryId), PageNr, 12);
+        paginatedList = new PagedListDto<Post>
+        {
+            CurrentPage = result.CurrentPage,
+            TotalPages = result.TotalPages,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount,
+            HasNext = result.HasNext,
+            HasPrevious = result.HasPrevious,
+            Items = result
+        };
+    }
+
+}

@@ -1,0 +1,155 @@
+﻿@page "/admin/post/{postId}"
+@using System.Text.Json
+@using AutoMapper
+@using EelamHeroes.Models.Entity
+@using EelamHeroes.Models.ViewModel
+@using EelamHeroes.Repository.Interface
+@using Syncfusion.Blazor.RichTextEditor
+@using Radzen
+@inject IPostRepository PostRepository
+@inject IGeneralRepository Repository
+@inject IMapper Mapper
+@inject NotificationService notificationService
+@inject NavigationManager NavigationManager
+<AuthorizeView Roles="Admin">
+    <NotAuthorized>
+        <h3>Only admin can access this page!</h3>
+    </NotAuthorized>
+    <Authorized Context="Auth">
+
+        @if (model == null)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <div class="container">
+                <RadzenNotification/>
+                <RadzenTemplateForm TItem="PostAddOrUpdateViewModel" Data="@model" Submit="@OnSubmit">
+                    <RadzenFieldset Text="@headerText">
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-md-4 align-right">
+                                <RadzenLabel Text="Title"/>
+                            </div>
+                            <div class="col">
+                                <RadzenTextBox style="display: block" Name="FirstName" @bind-Value="model.Title"/>
+                                <RadzenRequiredValidator Component="FirstName" Text="Title name is required" Style="position: absolute"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-md-4">
+                                <RadzenLabel Text="Category"/>
+                            </div>
+                            <div class="col">
+                                <RadzenDropDown Data="@categories" Name="Rank" @bind-Value="model.CategoryId"
+                                                TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-md-4">
+                                <RadzenLabel Text="Excerpt"/>
+                            </div>
+                            <div class="col">
+                                <RadzenTextArea @bind-Value="model.Excerpt"/>
+                                <RadzenRequiredValidator Component="FirstName" Text="Excerpt is required" Style="position: absolute"/>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-md-4">
+                                <RadzenLabel Text="Image"/>
+                            </div>
+                            <div class="col">
+
+                                <RadzenUpload Accept="image/*" Url="upload/single" Style="margin-bottom: 20px;"
+                                              Complete="@Completed"/>
+                                @if (!string.IsNullOrEmpty(model.ImagePath))
+                                {
+                                    <RadzenImage Path="@model.ImagePath" Style="max-width:200px">
+                                    </RadzenImage>
+                                }
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col">
+                                <RadzenLabel Text="Body"/>
+                            </div>
+                            <div >
+                                <SfRichTextEditor @bind-Value="model.Body">
+                                    <RichTextEditorToolbarSettings Items="@Tools"></RichTextEditorToolbarSettings>
+                                    <RichTextEditorImageSettings SaveFormat="SaveFormat.Base64"></RichTextEditorImageSettings>
+                                </SfRichTextEditor>
+                            </div>
+                        </div>
+                        <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"></RadzenButton>
+                    </RadzenFieldset>
+                </RadzenTemplateForm>
+            </div>
+        }
+
+    </Authorized>
+</AuthorizeView>
+
+@code {
+
+    public object[] Tools = new object[]
+    {
+        "Bold", "Italic", "Underline", "StrikeThrough",
+        "FontName", "FontSize", "FontColor", "BackgroundColor", "|",
+        "Formats", "Alignments", "OrderedList", "UnorderedList",
+        "Outdent", "Indent", "|",
+        "CreateLink", "Image", "|", "Undo", "Redo"
+    };
+
+    private IEnumerable<Category> categories;
+    private PostAddOrUpdateViewModel model;
+    string imagePath;
+    string headerText;
+
+    [Parameter]
+    public string PostId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (PostId == "new")
+        {
+            headerText = "Create new post";
+            model = new PostAddOrUpdateViewModel();
+        }
+        else
+        {
+            headerText = "Edit post";
+            var post = await PostRepository.GetPostById(int.Parse(PostId));
+            model = Mapper.Map<PostAddOrUpdateViewModel>(post);
+        }
+    //model = new PostAddOrUpdateViewModel();
+    //ranks = await Repository.GetRanks();
+        categories = await PostRepository.GetCategories();
+    }
+
+    async Task OnSubmit(PostAddOrUpdateViewModel model)
+    {
+        if (model.CategoryId <= 0)
+        {
+            notificationService.Notify(new NotificationMessage {Severity = NotificationSeverity.Error, Summary = "Category is required", Duration = 4000});
+            return;
+        }
+        if (string.IsNullOrEmpty(model.ImagePath))
+        {
+            notificationService.Notify(new NotificationMessage {Severity = NotificationSeverity.Error, Summary = "Image is required", Duration = 4000});
+            return;
+        }
+        if (string.IsNullOrEmpty(model.Body))
+        {
+            notificationService.Notify(new NotificationMessage {Severity = NotificationSeverity.Error, Summary = "Body is required", Duration = 4000});
+            return;
+        }
+        await PostRepository.AddOrUpdate(model);
+        NavigationManager.NavigateTo("category/" + model.CategoryId);
+    }
+
+    void Completed(UploadCompleteEventArgs args)
+    {
+        model.ImagePath = args.RawResponse;
+    }
+
+}

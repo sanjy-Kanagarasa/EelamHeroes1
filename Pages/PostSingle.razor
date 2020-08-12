@@ -1,0 +1,44 @@
+﻿@page "/post/{postId}"
+
+@using EelamHeroes.Data
+@using EelamHeroes.Models.Entity
+@using EelamHeroes.Repository.Interface
+@inject IPostRepository PostRepository
+
+
+@if (post == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="container">
+        <AuthorizeView Roles="Admin">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="/admin/post/@post.Id">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </AuthorizeView>
+        <div class="intro">
+            <h2 class="text-center">@post.Title</h2>
+        </div>
+        @((MarkupString) post.Body)
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public string PostId { get; set; }
+
+    private Post post;
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await PostRepository.GetPostById(int.Parse(PostId));
+    }
+
+}

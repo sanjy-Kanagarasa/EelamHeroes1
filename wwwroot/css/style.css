@@ -1,0 +1,412 @@
+  .home-image{
+      display: block;
+  }
+
+  .home-side{
+      padding: 20px;
+  }
+  .maveera{
+    font-family: 'Mukta Malar',sans-serif;
+    font-size:100px;
+}
+.maveera{
+    font-family: 'Mukta Malar',sans-serif;
+    font-size:100px;
+    line-height: 80%;
+}
+.maveera-in1{
+    font-family: 'Mukta Malar',sans-serif;
+    font-size:20px;
+    line-height: 80%;
+}
+.maveera-in{
+    font-family: 'Mukta Malar',sans-serif;
+    font-size:25px;
+    line-height: 80%;
+}
+.footer{
+    background: #484747;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    font-size: 14px;
+    line-height: 24px;
+    background-color:#484747 ;
+}
+.home-rem{
+    font-family: 'Mukta Malar',sans-serif;
+    padding: 10px;
+    font-weight: 600;
+}
+.about-text{
+    font-family: 'Mukta Malar',sans-serif;
+}
+.search-holder{
+    padding-left:20px;
+    font-family: 'Mukta Malar',sans-serif;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+}
+.link {
+    background-color:#f59f1f;
+    width:100%;
+    position:relative;
+    text-align:left;
+    font-family: 'Mukta Malar',sans-serif;
+    color: white;
+    padding: 10px;
+    
+}
+.search{
+    background-color: #dadad9;
+    color: white;
+    margin-right: 0px;
+    font-family: 'Mukta Malar',sans-serif;
+    padding: 10px;
+
+}
+
+.search-button{
+    background-color: #e00a0f;
+    
+}
+
+.results-container .panel {
+    padding: 0 15px;
+}
+.results-filter {
+    background: #f6f6f6;
+    position: fixed;
+    top: 70px;
+    z-index: 14;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    -webkit-transition: height .4s ease-in-out;
+    transition: height .4s ease-in-out;
+    height: 75px;
+}
+
+.clear-filters
+{
+    font-size:.8em;
+    display:block;
+    margin-bottom:10px;
+    color:#e00a0f
+}
+
+.results-container h1 {
+    font-size: 1.1245em;
+    font-weight: 500;
+    margin-top: 28px;
+    font-family: 'Mukta Malar',sans-serif;
+
+}
+
+button.link1 {
+    font-size: 1.1em;
+    background: #00a8a5;
+    color: #fff;
+    display: block;
+    padding: 10px 5px;
+    margin: 0 0 3px;
+    text-align: center;
+    border-radius: 3px;
+    width: 100%;
+    border: 0;
+    font-size: 18px;
+    line-height: 24px;
+    font-family: 'Mukta Malar',sans-serif;
+
+}
+input, select, textarea {
+    background: #dadad9;
+    border: 0;
+    color: #000;
+    margin: 0 0 30px;
+    padding: 0 15px;
+    height: 44px;
+    line-height: 44px;
+    width: 100%;
+    margin-bottom: 16px;
+    font-family: 'Mukta Malar',sans-serif;
+
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    background: #e00a0f;
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+    top: 0;
+    right: 0;
+}
+.sticky{
+    position: sticky;
+}
+.details{
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.soldier {
+    background-color: #fff;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    position: relative;
+    margin: 15px;
+}
+
+.soldier .head {
+    background-color: #f6f6f6;
+    position: relative;
+    font-size: 20px;
+    font-family: 'Mukta Malar',sans-serif;
+
+
+}
+.soldier .head, .soldier .info {
+    padding: 16px 20px;
+
+}
+.soldier .info{
+    font-size: 20px;
+    font-family: 'Mukta Malar',sans-serif;
+    
+}
+
+.soldier p, .soldier p.name {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.soldier p.name {
+    font-family: 'Mukta Malar',sans-serif;
+        text-transform: capitalize;
+    font-weight: 500;
+    font-size: 1.375em;
+    max-width: 80%;
+    margin-bottom: 2px;
+}
+.soldier p {
+   
+    color: #4a4746;
+}
+
+.soldier .btn-default {
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+     display: block; 
+     text-align: left; 
+     font-family: 'Mukta Malar',sans-serif;
+     font-size: 15px;
+
+}
+.btn-default {
+     color: #000; 
+     display: inline-block;
+     min-width: 116px; 
+    padding: 0 64px 0 20px;
+    background: #dadad9;
+    text-overflow: ellipsis;
+     white-space: nowrap; 
+    height: 44px;
+    line-height: 44px;
+    border-radius: 2px;
+    border: 0;
+    max-width: 100%;
+}
+.btn-default:before {
+    content: "\f105";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-family: FontAwesome;
+    color: #fff;
+    background: #e00a0f;
+    display: block;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    font-size: 22px;
+    text-align: center;
+    box-sizing: inherit;
+}
+.btn-default, .img-strip {
+    position: relative;
+}
+.notice-head{
+    margin:10px;
+    
+}
+.notice-details{
+    background-color: whitesmoke;
+    padding: 5px;
+    border: rgb(194, 194, 194) 15px;
+    border-style: solid;
+}
+.notice-details .name{
+    font-size: 40px;
+    font-family: 'Mukta Malar',sans-serif;
+    padding-left: 5px;
+    font-weight: 600;
+}
+.notice-details .realname{
+    font-size: 30px;
+    font-family: 'Mukta Malar',sans-serif;
+    padding-left: 5px;
+    font-weight: 500;
+}
+.notice-details .address{
+    font-size: 20px;
+    font-family: 'Mukta Malar',sans-serif;
+    padding-left: 5px;
+
+}
+
+.kuruthi{
+    font-family: 'Mukta Malar',sans-serif;
+    background-color: gray;
+    margin: 10px;
+    padding: 3px;
+}
+.Rtable {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 0 3em 0;
+    padding: 0;
+    font-family: 'Mukta Malar',sans-serif;
+
+}
+.Rtable-cell.Rtable-cell--1of4 {
+    width: 25%;
+}
+
+.Rtable-cell--medium {
+    background-color: #efefef;
+    border-color: #d5d5d5;
+}
+.Rtable-cell {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 100%;
+    padding: 0.8em 1.2em;
+    overflow: hidden;
+    list-style: none;
+    border: solid 1px white;
+    background-color: rgba(112, 128, 144, 0.2);
+}
+.Rtable-cell.Rtable-cell--3of4 {
+    width: 75%;
+    background-color: #fafafa;
+}
+
+
+.search-holder button[type=submit] {
+    color: #fff;
+    float: right;
+    width: 44px;
+    height: 44px;
+    background: #e00a0f;
+    border: 0;
+    text-align: center;
+}
+
+.search-holder button[type=submit] span {
+    display: block;
+    padding: 0;
+    position: relative;
+    line-height: 44px;
+}
+
+.search-holder button[type=submit] span:after {
+    content: "\f002";
+    font-family: FontAwesome;
+}
+
+.search-holder .input-holder{
+    overflow: hidden;
+}
+.home-right .ctas .link {
+    background-color: #00a8a5;
+    width: 100%;
+    position: relative;
+    text-align: left;
+    padding: 10px 20px;
+}
+.link:before {
+    content: "\f105";
+    position: absolute;
+    right: 6%;
+    top: 0;
+    font-family: FontAwesome;
+    color: #fff;
+    display: block;
+    line-height: 42px;
+    font-size: 22px;
+    text-align: center;
+}
+.table{
+    margin-left: 190px;
+}
+  .projects .item .name {
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      color: inherit;
+  }
+
+  .h3, h3 {
+      font-size: 1.75rem;
+  }
+
+   h3 {
+      margin-bottom: .5rem;
+      font-weight: 500;
+      line-height: 1.2;
+  }
+
+  h3 {
+      margin-top: 0;
+      margin-bottom: .5rem;
+  }
+
+  .projects .item {
+      text-align: center;
+  }
+
+  .projects .item .description {
+      font-size: 15px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+  }
+
+  .projects p {
+      color: #7d8285;
+      margin-top: 0;
+      margin-bottom: 1rem;
+  }
+  .img-fluid {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+      border-style: none;
+  }
+
+  img {
+  }
+
+
+
+
+
