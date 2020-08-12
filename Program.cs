@@ -23,6 +23,7 @@ namespace EelamHeroes
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls(urls: "http://localhost:5010");
                 });
     }
 }
