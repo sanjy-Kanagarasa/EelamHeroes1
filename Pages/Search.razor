@@ -10,7 +10,7 @@
 @inject NavigationManager navManager
 <div class="results-container">
     <div class="row no-gutters">
-        <div class="col-sm-3 ">
+        <div class="col-sm-3 mb-3">
 
             <div class="panel">
 
@@ -20,7 +20,7 @@
 
 
                 <div >
-                    <button type="button" @onclick="OnClearFilter"  class="btn btn-link">Clear Filters</button>
+                    <button type="button" @onclick="OnClearFilter" class="btn btn-link">Clear Filters</button>
                     @*
                         <input type="text" class="autoupdate" name="forenames" placeholder="இயக்கப்பெயர்" value="">
                         <input type="text" class="autoupdate" name="surname" placeholder="இயற்பெயர்" value="">
@@ -56,34 +56,54 @@
         }
         else
         {
-            <div class="col-sm-9">
+            <div class="col-sm-9 mt-5">
                 <div class="details">
-                    <div class="row p-4">
-                        @foreach (var hero in paginatedList.Items)
+                    <div class="layer">
+                        @if (paginatedList.Items.Any())
                         {
-                            <div class="col-sm-6 col-md-4">
-                                <div class=" mb-3" style="width: 100% !important;">
-                                    <div class="soldier cf [[+alt]]">
-                                        <a href="/hero/@hero.Id">
-                                            <div class="head">
-                                                <p class="name" title="F Heath">@hero.Name</p>
-                                                <p class="small">@hero.RealName</p>
+                            <div class="row p-4">
+                                @foreach (var hero in paginatedList.Items)
+                                {
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class=" mb-3" style="width: 100% !important;">
+                                            <div class="soldier cf [[+alt]]">
+                                                <a href="/hero/@hero.Id">
+                                                    <div class="head">
+                                                        <p class="name" title="F Heath">@hero.Name</p>
+                                                        <p class="small">@hero.RealName&nbsp;</p>
+                                                    </div>
+                                                    <div class="info">
+                                                        <p>@hero.Rank</p>
+                                                        <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
+                                                        <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
+                                                    </div>
+                                                    <button class="btn-default">@hero.Name பற்றி முழுமையான விபரம்</button>
+                                                </a>
                                             </div>
-                                            <div class="info">
-                                                <p>@hero.Rank</p>
-                                                <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
-                                                <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
-                                            </div>
-                                            <button class="btn-default">@hero.Name பற்றி முழுமையான விபரம்</button>
-                                        </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
+                                   HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
+                            </Pager>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-md-4 no-records">
+                                    <div class="card text-center">
+                                        <div class="card-header">
+                                            No records found.
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">மாவீரர் விபரம் எதுவும் கிடைக்கவில்லை.</h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         }
                     </div>
-                    <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
-                           HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
-                    </Pager>
                 </div>
             </div>
         }
@@ -151,6 +171,7 @@
     {
         filter = new FilterDto();
     }
+
     public async void PageIndexChanged(int newPageNumber)
     {
         if (newPageNumber < 1 || newPageNumber > paginatedList.TotalPages)
@@ -173,3 +194,4 @@
     }
 
 }
+

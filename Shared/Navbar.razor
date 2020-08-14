@@ -1,4 +1,4 @@
-﻿<div class="navbar">
+﻿@*<div class="navbar">
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">
             <img src="img/EELAMMAAVERARLOGO.png" width="200" height="30" alt="">
@@ -7,6 +7,52 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">தளம்</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="category">category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">தொடர்புகட்கு</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">எம்மைப்பற்றி</a>
+                </li>
+                <AuthorizeView>
+                    <Authorized>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Admin
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="admin/hero/new">Create Hero</a>
+                                <a class="dropdown-item" href="admin/post/new">Create Post</a>
+                                <a class="dropdown-item" href="Identity/Account/Login">Dashboard</a>
+                            </div>
+                        </li>
+                    </Authorized>
+                    <NotAuthorized>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Identity/Account/Login">Login</a>
+                        </li>
+                    </NotAuthorized>
+                </AuthorizeView>
+
+            </ul>
+        </div>
+    </nav>
+</div>*@
+<div class="navbar">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+            <img src="img/EELAMMAAVERARLOGO.png" width="200" height="30" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#">தளம்</a>
