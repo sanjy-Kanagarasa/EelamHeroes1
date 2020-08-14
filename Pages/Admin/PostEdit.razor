@@ -1,4 +1,5 @@
 ﻿@page "/admin/post/{postId}"
+@attribute [Authorize(Roles = "Admin")] 
 @using System.Text.Json
 @using AutoMapper
 @using EelamHeroes.Models.Entity
@@ -11,83 +12,77 @@
 @inject IMapper Mapper
 @inject NotificationService notificationService
 @inject NavigationManager NavigationManager
-<AuthorizeView Roles="Admin">
-    <NotAuthorized>
-        <h3>Only admin can access this page!</h3>
-    </NotAuthorized>
-    <Authorized Context="Auth">
 
-        @if (model == null)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <div class="container">
-                <RadzenNotification/>
-                <RadzenTemplateForm TItem="PostAddOrUpdateViewModel" Data="@model" Submit="@OnSubmit">
-                    <RadzenFieldset Text="@headerText">
-                        <div class="row" style="margin-bottom: 20px">
-                            <div class="col-md-4 align-right">
-                                <RadzenLabel Text="Title"/>
-                            </div>
-                            <div class="col">
-                                <RadzenTextBox style="display: block" Name="FirstName" @bind-Value="model.Title"/>
-                                <RadzenRequiredValidator Component="FirstName" Text="Title name is required" Style="position: absolute"/>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px">
-                            <div class="col-md-4">
-                                <RadzenLabel Text="Category"/>
-                            </div>
-                            <div class="col">
-                                <RadzenDropDown Data="@categories" Name="Rank" @bind-Value="model.CategoryId"
-                                                TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px">
-                            <div class="col-md-4">
-                                <RadzenLabel Text="Excerpt"/>
-                            </div>
-                            <div class="col">
-                                <RadzenTextArea @bind-Value="model.Excerpt"/>
-                                <RadzenRequiredValidator Component="FirstName" Text="Excerpt is required" Style="position: absolute"/>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px">
-                            <div class="col-md-4">
-                                <RadzenLabel Text="Image"/>
-                            </div>
-                            <div class="col">
 
-                                <RadzenUpload Accept="image/*" Url="upload/single" Style="margin-bottom: 20px;"
-                                              Complete="@Completed"/>
-                                @if (!string.IsNullOrEmpty(model.ImagePath))
-                                {
-                                    <RadzenImage Path="@model.ImagePath" Style="max-width:200px">
-                                    </RadzenImage>
-                                }
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px">
-                            <div class="col">
-                                <RadzenLabel Text="Body"/>
-                            </div>
-                            <div >
-                                <SfRichTextEditor @bind-Value="model.Body">
-                                    <RichTextEditorToolbarSettings Items="@Tools"></RichTextEditorToolbarSettings>
-                                    <RichTextEditorImageSettings SaveFormat="SaveFormat.Base64"></RichTextEditorImageSettings>
-                                </SfRichTextEditor>
-                            </div>
-                        </div>
-                        <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"></RadzenButton>
-                    </RadzenFieldset>
-                </RadzenTemplateForm>
-            </div>
-        }
+@if (model == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="container">
+        <RadzenNotification/>
+        <RadzenTemplateForm TItem="PostAddOrUpdateViewModel" Data="@model" Submit="@OnSubmit">
+            <RadzenFieldset Text="@headerText">
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-4 align-right">
+                        <RadzenLabel Text="Title"/>
+                    </div>
+                    <div class="col">
+                        <RadzenTextBox style="display: block" Name="FirstName" @bind-Value="model.Title"/>
+                        <RadzenRequiredValidator Component="FirstName" Text="Title name is required" Style="position: absolute"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="Category"/>
+                    </div>
+                    <div class="col">
+                        <RadzenDropDown Data="@categories" Name="Rank" @bind-Value="model.CategoryId"
+                                        TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="Excerpt"/>
+                    </div>
+                    <div class="col">
+                        <RadzenTextArea @bind-Value="model.Excerpt"/>
+                        <RadzenRequiredValidator Component="FirstName" Text="Excerpt is required" Style="position: absolute"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="Image"/>
+                    </div>
+                    <div class="col">
 
-    </Authorized>
-</AuthorizeView>
+                        <RadzenUpload Accept="image/*" Url="upload/single" Style="margin-bottom: 20px;"
+                                      Complete="@Completed"/>
+                        @if (!string.IsNullOrEmpty(model.ImagePath))
+                        {
+                            <RadzenImage Path="@model.ImagePath" Style="max-width:200px">
+                            </RadzenImage>
+                        }
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col">
+                        <RadzenLabel Text="Body"/>
+                    </div>
+                    <div >
+                        <SfRichTextEditor @bind-Value="model.Body">
+                            <RichTextEditorToolbarSettings Items="@Tools"></RichTextEditorToolbarSettings>
+                            <RichTextEditorImageSettings SaveFormat="SaveFormat.Base64"></RichTextEditorImageSettings>
+                        </SfRichTextEditor>
+                    </div>
+                </div>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"></RadzenButton>
+            </RadzenFieldset>
+        </RadzenTemplateForm>
+    </div>
+}
+
 
 @code {
 
@@ -144,7 +139,7 @@
             return;
         }
         await PostRepository.AddOrUpdate(model);
-        NavigationManager.NavigateTo("category/" + model.CategoryId);
+        NavigationManager.NavigateTo("category/" + model.CategoryId, true);
     }
 
     void Completed(UploadCompleteEventArgs args)

@@ -23,4 +23,14 @@
     <PackageReference Include="Syncfusion.Blazor" Version="18.2.0.47" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\Admin\HeroImageEdit.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="wwwroot\images\hero\19317.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

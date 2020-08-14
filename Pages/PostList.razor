@@ -15,9 +15,25 @@ else
 {
     <div class="container">
         <div class="intro">
-            <h2 class="text-center">Posts</h2>
+            <h2 class="text-center mb-4" style="margin-top: 60px">@title</h2>
         </div>
-        <div class="row projects">
+        <div class="row">
+            @foreach (var post in paginatedList.Items)
+            {
+                <div class="col-sm-6 col-md-4">
+                    <div class="card mb-4">
+                        <a href="post/@post.Id">
+                            <img class="card-img-top img-fluid" src="@post.ImagePath" onerror="this.src='https://www.suntip.nl/assets/img/image-not-found.png'" alt="..."/>
+                            <div class="card-body">
+                                <h5 class="card-title">@post.Title</h5>
+                                <p class="card-text">@post.Excerpt</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        @*<div class="row projects">
             @foreach (var post in paginatedList.Items)
             {
                 <div class="col-sm-6 col-lg-4 item">
@@ -28,7 +44,7 @@ else
                     </a>
                 </div>
             }
-        </div>
+        </div>*@
         <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
                HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
         </Pager>
@@ -39,29 +55,39 @@ else
 
     [Parameter]
     public string CategoryId { get; set; }
+
     PagedListDto<Post> paginatedList;
-    int PageNr = 1;
+    int pageNr = 1;
+    string title;
 
     //private IEnumerable<Post> posts;
 
     protected override async Task OnInitializedAsync()
     {
+        title = CategoryId switch
+        {
+            "1" => "குருதிச்சுவடுகள்",
+            "2" => "படைநடவடிக்கைகள்",
+            "3" => "துயிலும் இல்லங்கள்",
+            _ => title
+            };
         await FetchData();
     }
+
     public async void PageIndexChanged(int newPageNumber)
     {
         if (newPageNumber < 1 || newPageNumber > paginatedList.TotalPages)
         {
             return;
         }
-        PageNr = newPageNumber;
+        pageNr = newPageNumber;
         await FetchData();
         StateHasChanged();
     }
 
     private async Task FetchData()
     {
-        var result = await PostRepository.GetPostsByCategory(int.Parse(CategoryId), PageNr, 12);
+        var result = await PostRepository.GetPostsByCategory(int.Parse(CategoryId), pageNr, 12);
         paginatedList = new PagedListDto<Post>
         {
             CurrentPage = result.CurrentPage,

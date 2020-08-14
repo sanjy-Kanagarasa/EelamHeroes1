@@ -38,6 +38,25 @@ namespace EelamHeroes.Controller
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPost("upload/hero/{id}")]
+        public IActionResult Hero(int id, IFormFile file)
+        {
+            try
+            {
+                if (file != null && file.Length > 0)
+                {
+                    return Ok(UploadFileToUrl(file, "images/hero", id + ".jpg"));
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
         
         private static string RandomString(int length)
         {

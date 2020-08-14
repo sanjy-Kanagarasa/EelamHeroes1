@@ -11,8 +11,99 @@
 }
 else
 {
-    <div class="container-fluid p-0">
-        <div class="row no-gutters">
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="card mb-3 mt-4" style="max-width: 600px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="@($"images/hero/{@hero.Id}.jpg")" onerror="this.src='images/hero/default.jpg'" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body font-mukta">
+                            <h3 class="card-title">@hero.Rank @hero.Name</h3>
+                            <div class="card-text">
+                                <p >@hero.RealName</p>
+                                <p class="text-muted">@hero.Address</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <AuthorizeView Roles="Admin">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="/admin/hero-image/@hero.Id">
+                        Edit image
+                    </a> |
+                    <a href="/admin/hero/@hero.Id">
+                        Edit details
+                    </a>
+                </div>
+            </div>
+        </AuthorizeView>
+        <div class="d-flex justify-content-center">
+            <table class="table table-bordered" style="width: 75%">
+                <tbody class="font-mukta">
+                <tr>
+                    <td class="align-middle col-left">நிலை:</td>
+                    <td>@hero.Rank</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">இயக்கப் பெயர்:</td>
+                    <td>@hero.Name</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">இயற்பெயர்:</td>
+                    <td>@hero.RealName</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">பால்:</td>
+                    <td>@hero.Gender</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">முகவரி:</td>
+                    <td>@hero.Address</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">மாவட்டம்:</td>
+                    <td>@hero.District</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">வீரப்பிறப்பு:</td>
+                    <td>@hero.BirthDate.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">வீரச்சாவு:</td>
+                    <td>@hero.DeathDate.ToString("dd/MM/yyyy")</td>
+                </tr>
+                <tr>
+                    <td class="align-middle col-left">நிகழ்வு:</td>
+                    <td>@hero.Incident</td>
+                </tr>
+                @if (!string.IsNullOrWhiteSpace((hero.RestingHome)))
+                {
+                    <tr>
+                        <td class="align-middle col-left">துயிலுமில்லம்:</td>
+                        <td>@hero.RestingHome</td>
+                    </tr>
+                }
+                @if (!string.IsNullOrWhiteSpace((hero.Comment)))
+                {
+                    <tr >
+                        <td class="align-middle col-left">மேலதிக விபரம்:</td>
+                        <td>@hero.Comment</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+        @*<div class="row no-gutters">
             <div class="container">
                 <AuthorizeView Roles="Admin">
                     <div class="row">
@@ -82,8 +173,7 @@ else
 
                 </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 }
 
 @code {
@@ -98,3 +188,4 @@ else
     }
 
 }
+

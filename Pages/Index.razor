@@ -3,7 +3,7 @@
 <div class="row no-gutters">
     <div class="col-sm-6">
         <div class="home-image">
-            <img class="img-fluid" src="./img/10.jpg" />
+            <img class="img-fluid" src="./img/10.jpg"/>
         </div>
     </div>
     <div class="col-sm-6">
@@ -41,12 +41,13 @@
             </div>
             <div class="row no-gutters">
                 <div class="col-sm-6 ">
-                    <form class="form-inline my-2 my-lg-0 mx-auto">
+                    <form class="form-inline my-2 my-lg-0 mx-auto" action="/search">
                         <div class="search-holder">
-                            <button type="submit"><span></span></button>
+                            <button type="submit">
+                                <span></span>
+                            </button>
                             <div class="input-holder">
-                                <input name="name" type="search" placeholder="தேடல்" class="search-input">
-                                <input name="uncommemorated" type="hidden" value="off" class="search-input">
+                                <input name="name" @bind="searchValue" type="search" @bind:event="oninput" placeholder="தேடல்" class="search-input">
                             </div>
                         </div>
                     </form>
@@ -54,8 +55,15 @@
                 <div class="col-sm-6">
                     <h3></h3>
                     <a href="/search" class="link" id="suggest-random-casualty">மாவீரர் விபரம் <span class=""></span></a>
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@code
+{
+    string searchValue;
+}

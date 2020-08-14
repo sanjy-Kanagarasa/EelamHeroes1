@@ -3,9 +3,11 @@
 @using EelamHeroes.Models.Dto
 @using EelamHeroes.Models.Entity
 @using EelamHeroes.Repository.Interface
+@using Microsoft.AspNetCore.WebUtilities
 @inject IGeneralRepository Repository
 @inject IHeroRepository HeroRepository
 @inject IMapper Mapper
+@inject NavigationManager navManager
 <div class="results-container">
     <div class="row no-gutters">
         <div class="col-sm-3 ">
@@ -23,25 +25,25 @@
                         <input type="text" class="autoupdate" name="forenames" placeholder="இயக்கப்பெயர்" value="">
                         <input type="text" class="autoupdate" name="surname" placeholder="இயற்பெயர்" value="">
                     *@
-                    <RadzenTextBox Placeholder="இயக்கப்பெயர்"  @bind-Value="filter.Name" Style="margin-bottom: 10px"/>
+                    <RadzenTextBox Placeholder="இயக்கப்பெயர்" @bind-Value="filter.Name" Style="margin-bottom: 10px"/>
                     <RadzenTextBox Placeholder="இயற்பெயர்" @bind-Value="filter.RealName" Style="margin-bottom: 10px"/>
-                    <RadzenDatePicker Placeholder="வீரப்பிறப்பு நாள்" @bind-Value="filter.BirthDate" DateFormat="d" Change="@(args => Change(args, "DatePicker", "MM/dd/yyyy"))" 
+                    <RadzenDatePicker Placeholder="வீரப்பிறப்பு நாள்" @bind-Value="filter.BirthDate" DateFormat="d" Change="@(args => Change(args, "DatePicker", "MM/dd/yyyy"))"
                                       Style="margin-bottom: 10px"/>
                     <p>வீரச்சாவு</p>
-                    <RadzenDropDown AllowClear="true"  Placeholder="நாள்" Data="@days" @bind-Value="filter.DeathDay"
+                    <RadzenDropDown AllowClear="true" Placeholder="நாள்" Data="@days" @bind-Value="filter.DeathDay"
                                     Style="margin-bottom: 10px"/>
-                    <RadzenDropDown AllowClear="true"  Placeholder="மாதம்" Data="@months" @bind-Value="filter.DeathMonth"
+                    <RadzenDropDown AllowClear="true" Placeholder="மாதம்" Data="@months" @bind-Value="filter.DeathMonth"
                                     Style="margin-bottom: 10px"/>
-                    <RadzenDropDown AllowClear="true"  Placeholder="ஆண்டு" Data="@years" @bind-Value="filter.DeathYear"
+                    <RadzenDropDown AllowClear="true" Placeholder="ஆண்டு" Data="@years" @bind-Value="filter.DeathYear"
                                     Style="margin-bottom: 10px"/>
-                    
-                    <RadzenDropDown AllowClear="true"  Placeholder="நிலை" Data="@ranks" @bind-Value="filter.RankId"
+
+                    <RadzenDropDown AllowClear="true" Placeholder="நிலை" Data="@ranks" @bind-Value="filter.RankId"
                                     TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px"/>
-                    <RadzenDropDown AllowClear="true"  Placeholder="மாவட்டரீதியாக" Data="@districts" @bind-Value="filter.DistrictId"
+                    <RadzenDropDown AllowClear="true" Placeholder="மாவட்டரீதியாக" Data="@districts" @bind-Value="filter.DistrictId"
                                     TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px"/>
-                    <RadzenDropDown AllowClear="true"  Placeholder="துயிலுமில்லவாரியாக" Data="@restingHomes" @bind-Value="filter.RestingHomeId"
+                    <RadzenDropDown AllowClear="true" Placeholder="துயிலுமில்லவாரியாக" Data="@restingHomes" @bind-Value="filter.RestingHomeId"
                                     TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px"/>
-                   
+
                     <button class="ui_grey ui_grey_right filter_btn link1" @onclick="OnSearch">தேடுக</button>
 
                 </div >
@@ -56,32 +58,13 @@
         {
             <div class="col-sm-9">
                 <div class="details">
-                    <div class="row no-gutters mt-20">
-                        @foreach (var hero in @paginatedList.Items)
+                    <div class="row p-4">
+                        @foreach (var hero in paginatedList.Items)
                         {
-                            <div class="col-sm-4">
-                                <div class="soldier cf [[+alt]]">
-                                    <a href="/hero/@hero.Id">
-                                    <div class="head">
-                                        <p class="name" title="F Heath">@hero.Name</p>
-                                        <p class="small">@hero.RealName</p>
-                                    </div>
-                                    <div class="info">
-                                        <p>@hero.Rank</p>
-                                        <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
-                                        <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
-                                    </div>
-                                    <button class="btn-default">@hero.Name பற்றி முழுமையான விபரம்</button>
-                                    </a>
-                                </div>
-                            </div>
-                        }
-
-
-                        @*<RadzenDataList WrapItems="true" AllowPaging="true" Data="@heroes" TItem="HeroDto">
-                        <Template Context="hero">
-                                <div class="col-sm-6 col-md-3">
+                            <div class="col-sm-6 col-md-4">
+                                <div class=" mb-3" style="width: 100% !important;">
                                     <div class="soldier cf [[+alt]]">
+                                        <a href="/hero/@hero.Id">
                                             <div class="head">
                                                 <p class="name" title="F Heath">@hero.Name</p>
                                                 <p class="small">@hero.RealName</p>
@@ -92,11 +75,51 @@
                                                 <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
                                             </div>
                                             <button class="btn-default">@hero.Name பற்றி முழுமையான விபரம்</button>
+                                        </a>
                                     </div>
                                 </div>
-                        </Template>
-                    </RadzenDataList>*@
+                            </div>
+                            @*<div class="col-sm-6 col-md-4">
+                                <div class="card mb-3">
+                                    <a href="/hero/@hero.Id">
+                                        <div class="card-header">
+                                            <p class="name" title="F Heath">@hero.Name</p>
+                                            <p class="small">@hero.RealName</p>
+                                        </div>
+                                        <div class="card-body text-secondary">
+                                            <p>@hero.Rank</p>
+                                            <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
+                                            <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
+                                        </div>
+                                        $1$ <div class="card-footer">@hero.Name பற்றி முழுமையான விபரம்</div> #1#
+                                    </a>
+                                </div>
+                            </div>*@
+                        }
                     </div>
+                    @*<div class="row no-gutters mt-20">
+                        @foreach (var hero in @paginatedList.Items)
+                        {
+                            <div class="col-sm-4">
+                                <div class="soldier cf [[+alt]]">
+                                    <a href="/hero/@hero.Id">
+                                        <div class="head">
+                                            <p class="name" title="F Heath">@hero.Name</p>
+                                            <p class="small">@hero.RealName</p>
+                                        </div>
+                                        <div class="info">
+                                            <p>@hero.Rank</p>
+                                            <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
+                                            <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
+                                        </div>
+                                        <button class="btn-default">@hero.Name பற்றி முழுமையான விபரம்</button>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>*@
                     <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
                            HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
                     </Pager>
@@ -113,9 +136,9 @@
     IEnumerable<District> districts;
     IEnumerable<Rank> ranks;
     IEnumerable<RestingHome> restingHomes;
-    IEnumerable<int> days = new List<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+    IEnumerable<int> days = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
     IEnumerable<int> years;
-    IEnumerable<int> months = new List<int>{1,2,3,4,5,6,7,8,9,10,11,12};
+    IEnumerable<int> months = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     //IEnumerable<HeroDto> heroes;
     PagedListDto<HeroDto> paginatedList;
 
@@ -130,9 +153,19 @@
         ranks = await Repository.GetRanks();
         districts = await Repository.GetDistricts();
         restingHomes = await Repository.GetRestingHomes();
-        //heroes = (await HeroRepository.Get(null, null, null, null)).Take(10).ToList();
+
+        var uri = navManager.ToAbsoluteUri(navManager.Uri);
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("name", out var param))
+        {
+            if (!string.IsNullOrWhiteSpace(param.First()))
+            {
+                filter.Name = param.First();
+            }
+        }
         await FetchData();
     }
+
     private async Task FetchData()
     {
         var result = await HeroRepository.GetByPage(filter);
@@ -147,6 +180,7 @@
             Items = Mapper.Map<List<HeroDto>>(result)
         };
     }
+
     private async Task OnSearch()
     {
         filter.PageNr = 1;
@@ -163,6 +197,7 @@
         await FetchData();
         StateHasChanged();
     }
+
     IEnumerable<DateTime> dates = new DateTime[] {DateTime.Today.AddDays(-1), DateTime.Today.AddDays(1)};
 
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
