@@ -45,7 +45,6 @@ else
 @code {
     private HeroAddOrUpdateViewModel model;
 
-    string headerText;
 
     [Parameter]
     public string HeroId { get; set; }
@@ -54,12 +53,10 @@ else
     {
         if (HeroId == "new")
         {
-            headerText = "Add new hero";
             model = new HeroAddOrUpdateViewModel();
         }
         else
         {
-            headerText = "Edit hero";
             var hero = await HeroRepository.GetById(int.Parse(HeroId));
             model = Mapper.Map<HeroAddOrUpdateViewModel>(hero);
         }

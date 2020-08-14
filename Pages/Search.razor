@@ -20,7 +20,7 @@
 
 
                 <div >
-                    <a href="#" class="clear-filters">Clear Filters</a>
+                    <button type="button" @onclick="OnClearFilter"  class="btn btn-link">Clear Filters</button>
                     @*
                         <input type="text" class="autoupdate" name="forenames" placeholder="இயக்கப்பெயர்" value="">
                         <input type="text" class="autoupdate" name="surname" placeholder="இயற்பெயர்" value="">
@@ -79,47 +79,8 @@
                                     </div>
                                 </div>
                             </div>
-                            @*<div class="col-sm-6 col-md-4">
-                                <div class="card mb-3">
-                                    <a href="/hero/@hero.Id">
-                                        <div class="card-header">
-                                            <p class="name" title="F Heath">@hero.Name</p>
-                                            <p class="small">@hero.RealName</p>
-                                        </div>
-                                        <div class="card-body text-secondary">
-                                            <p>@hero.Rank</p>
-                                            <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
-                                            <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
-                                        </div>
-                                        $1$ <div class="card-footer">@hero.Name பற்றி முழுமையான விபரம்</div> #1#
-                                    </a>
-                                </div>
-                            </div>*@
                         }
                     </div>
-                    @*<div class="row no-gutters mt-20">
-                        @foreach (var hero in @paginatedList.Items)
-                        {
-                            <div class="col-sm-4">
-                                <div class="soldier cf [[+alt]]">
-                                    <a href="/hero/@hero.Id">
-                                        <div class="head">
-                                            <p class="name" title="F Heath">@hero.Name</p>
-                                            <p class="small">@hero.RealName</p>
-                                        </div>
-                                        <div class="info">
-                                            <p>@hero.Rank</p>
-                                            <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
-                                            <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
-                                        </div>
-                                        <button class="btn-default">@hero.Name பற்றி முழுமையான விபரம்</button>
-                                    </a>
-                                </div>
-                            </div>
-                        }
-
-
-                    </div>*@
                     <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
                            HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
                     </Pager>
@@ -131,7 +92,6 @@
 
 
 @code {
-    DateTime? value = null;
     private FilterDto filter = new FilterDto();
     IEnumerable<District> districts;
     IEnumerable<Rank> ranks;
@@ -144,12 +104,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var temp_years = new List<int>();
+        var tempYears = new List<int>();
         for (var i = 1965; i < 2010; i++)
         {
-            temp_years.Add(i);
+            tempYears.Add(i);
         }
-        years = temp_years;
+        years = tempYears;
         ranks = await Repository.GetRanks();
         districts = await Repository.GetDistricts();
         restingHomes = await Repository.GetRestingHomes();
@@ -187,6 +147,10 @@
         await FetchData();
     }
 
+    private void OnClearFilter(MouseEventArgs e)
+    {
+        filter = new FilterDto();
+    }
     public async void PageIndexChanged(int newPageNumber)
     {
         if (newPageNumber < 1 || newPageNumber > paginatedList.TotalPages)

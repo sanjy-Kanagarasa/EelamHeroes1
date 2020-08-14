@@ -175,6 +175,15 @@ input, select, textarea {
     font-family: 'Mukta Malar',sans-serif;
     
 }
+.soldier .info p{
+    font-size: 16px;
+    margin-bottom: 3px !important;
+    
+}
+.soldier .head p{
+    margin-bottom: 3px !important;
+    
+}
 
 .soldier p, .soldier p.name {
     display: block;
@@ -186,12 +195,12 @@ input, select, textarea {
     font-family: 'Mukta Malar',sans-serif;
         text-transform: capitalize;
     font-weight: 500;
-    font-size: 1.375em;
+    font-size: 1em;
     max-width: 80%;
     margin-bottom: 2px;
 }
 .soldier p {
-   
+    font-family: 'Mukta Malar',sans-serif;
     color: #4a4746;
 }
 
