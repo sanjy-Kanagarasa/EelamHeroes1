@@ -10,6 +10,6 @@ namespace EelamHeroes.Models.Dto
         public string Rank { get; set; }
         public string Address { get; set; }
         public DateTime DeathDate { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }

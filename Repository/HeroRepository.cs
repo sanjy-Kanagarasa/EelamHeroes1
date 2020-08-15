@@ -89,7 +89,7 @@ namespace EelamHeroes.Repository
                 }
                 if (flt.DeathYear.HasValue)
                 {
-                    queryResult = queryResult.Where(q => q.DeathDate.Day == flt.DeathYear);
+                    queryResult = queryResult.Where(q => q.DeathDate.Year == flt.DeathYear);
                 }
                 if (flt.DistrictId.HasValue)
                 {

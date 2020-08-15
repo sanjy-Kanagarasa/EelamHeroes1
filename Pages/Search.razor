@@ -21,10 +21,6 @@
 
                 <div >
                     <button type="button" @onclick="OnClearFilter" class="btn btn-link">Clear Filters</button>
-                    @*
-                        <input type="text" class="autoupdate" name="forenames" placeholder="இயக்கப்பெயர்" value="">
-                        <input type="text" class="autoupdate" name="surname" placeholder="இயற்பெயர்" value="">
-                    *@
                     <RadzenTextBox Placeholder="இயக்கப்பெயர்" @bind-Value="filter.Name" Style="margin-bottom: 10px"/>
                     <RadzenTextBox Placeholder="இயற்பெயர்" @bind-Value="filter.RealName" Style="margin-bottom: 10px"/>
                     <RadzenDatePicker Placeholder="வீரப்பிறப்பு நாள்" @bind-Value="filter.BirthDate" DateFormat="d" Change="@(args => Change(args, "DatePicker", "MM/dd/yyyy"))"
@@ -75,7 +71,7 @@
                                                     <div class="info">
                                                         <p>@hero.Rank</p>
                                                         <p>வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
-                                                        <p>வீரப்பிறப்பு @hero.BirthDate.ToString("dd/MM/yyyy")</p>
+                                                        <p>வீரப்பிறப்பு @hero.BirthDate?.ToString("dd/MM/yyyy")</p>
                                                     </div>
                                                     <button class="btn-default">@hero.Name பற்றி முழுமையான விபரம்</button>
                                                 </a>
@@ -125,7 +121,7 @@
     protected override async Task OnInitializedAsync()
     {
         var tempYears = new List<int>();
-        for (var i = 1965; i < 2010; i++)
+        for (var i = 1974; i < 2010; i++)
         {
             tempYears.Add(i);
         }
@@ -194,4 +190,3 @@
     }
 
 }
-

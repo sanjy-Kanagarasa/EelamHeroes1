@@ -73,7 +73,7 @@ else
                 </tr>
                 <tr>
                     <td class="align-middle col-left">வீரப்பிறப்பு:</td>
-                    <td>@hero.BirthDate.ToString("dd/MM/yyyy")</td>
+                    <td>@hero.BirthDate?.ToString("dd/MM/yyyy")</td>
                 </tr>
                 <tr>
                     <td class="align-middle col-left">வீரச்சாவு:</td>
@@ -101,79 +101,6 @@ else
             </table>
         </div>
     </div>
-
-
-        @*<div class="row no-gutters">
-            <div class="container">
-                <AuthorizeView Roles="Admin">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a href="/admin/hero/@hero.Id">
-                                Edit
-                            </a>
-                        </div>
-                    </div>
-                </AuthorizeView>
-                <div class="notice-head">
-                    <div class="row no-gutters">
-
-                        <div class="col-sm-4">
-
-                            <img src="img/19317.jpg" alt="" class="w-50 float-right "/>
-                        </div>
-
-                        <div class="col-sm-8 notice-details">
-                            <h1 class="name">@hero.Rank @hero.Name</h1>
-                            <h1 class="realname">@hero.RealName</h1>
-                            <h1 class="address">@hero.Address</h1>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <span class="kuruthi">குருதிச்சுவடுகள்</span>
-                                </div>
-                                <div class="col-sm-1">fa</div>
-                                <div class="col-sm-1">fa</div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 table">
-                        <dl class="Rtable Rtable--2cols Rtable--collapse">
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">நிலை:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4">@hero.Rank</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">இயக்கப் பெயர்:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4">@hero.Name</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">இயற்பெயர்: </dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4">@hero.RealName</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">பால்:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4">@hero.Gender</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">முகவரி:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4">@hero.Address</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">மாவட்டம்:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4">@hero.District</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">வீரப்பிறப்பு:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4"> @hero.BirthDate.ToString("dd/MM/yyyy")</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">வீரச்சாவு:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4"> @hero.DeathDate.ToString("dd/MM/yyyy")</dd>
-                            <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">நிகழ்வு:</dt>
-                            <dd class="Rtable-cell Rtable-cell--3of4">@hero.Incident</dd>
-                            @if (!string.IsNullOrWhiteSpace((hero.RestingHome)))
-                            {
-                                <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">துயிலுமில்லம்:</dt>
-                                <dd class="Rtable-cell Rtable-cell--3of4">@hero.RestingHome</dd>
-                            }
-                            @if (!string.IsNullOrWhiteSpace((hero.Comment)))
-                            {
-                                <dt class="Rtable-cell Rtable-cell--medium Rtable-cell--1of4">மேலதிக விபரம்:</dt>
-                                <dd class="Rtable-cell Rtable-cell--3of4">@hero.Comment</dd>
-                            }
-                        </dl>
-                    </div>
-
-                </div>
-            </div>
-        </div>*@
 }
 
 @code {
@@ -188,4 +115,3 @@ else
     }
 
 }
-

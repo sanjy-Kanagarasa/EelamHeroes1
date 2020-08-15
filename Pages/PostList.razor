@@ -33,23 +33,17 @@ else
                 </div>
             }
         </div>
-        @*<div class="row projects">
-            @foreach (var post in paginatedList.Items)
-            {
-                <div class="col-sm-6 col-lg-4 item">
-                    <a class="img-hover-zoom--brightness" href="post/@post.Id">
-                        <img class="img-card" src="@post.ImagePath" onerror="this.src='https://www.suntip.nl/assets/img/image-not-found.png'"/>
-                        <h3 class="name">@post.Title</h3>
-                        <p class="desc">@post.Title</p>
-                    </a>
-                </div>
-            }
-        </div>*@
         <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
                HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
         </Pager>
     </div>
 }
+
+<style>
+    .row > div[class*='col-'] {
+          display: flex;
+      }
+</style>
 
 @code {
 
