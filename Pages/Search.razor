@@ -23,7 +23,7 @@
                     <button type="button" @onclick="OnClearFilter" class="btn btn-link">Clear Filters</button>
                     <RadzenTextBox Placeholder="இயக்கப்பெயர்" @bind-Value="filter.Name" Style="margin-bottom: 10px"/>
                     <RadzenTextBox Placeholder="இயற்பெயர்" @bind-Value="filter.RealName" Style="margin-bottom: 10px"/>
-                    <RadzenDatePicker Placeholder="வீரப்பிறப்பு நாள்" @bind-Value="filter.BirthDate" DateFormat="d" Change="@(args => Change(args, "DatePicker", "MM/dd/yyyy"))"
+                    <RadzenDatePicker Placeholder="வீரப்பிறப்பு நாள்" @bind-Value="filter.BirthDate" DateFormat="d" Change="@(args => Change(args, "DatePicker", "dd/MM/yyyy"))"
                                       Style="margin-bottom: 10px"/>
                     <p>வீரச்சாவு</p>
                     <RadzenDropDown AllowClear="true" Placeholder="நாள்" Data="@days" @bind-Value="filter.DeathDay"
