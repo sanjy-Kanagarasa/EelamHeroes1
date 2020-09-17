@@ -1,69 +1,179 @@
 ﻿@page "/"
 
-<div class="row no-gutters">
-    <div class="col-sm-6">
-        <div class="home-image">
-            <img class="img-fluid" src="./img/10.jpg"/>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="home-side">
-            <div class="row mx-auto mt-10">
-                <div class="col-sm-3">
-                    <img src="./img/KALRAI.png" alt="" class="img-fluid">
-                </div>
-                <div class="col-sm-3">
-                    <p class="maveera ">
-                        22390
-                        <span class="maveera-in">மாவீரர்கள்</span>
-                    </p>
+@using AutoMapper
+@using EelamHeroes.Models.Dto
+@using EelamHeroes.Models.Entity
+@using EelamHeroes.Repository.Interface
+@using Microsoft.AspNetCore.WebUtilities
+@inject IHeroRepository HeroRepository
+@inject IMapper Mapper
 
-                </div>
-                <div class="col-sm-3">
-                    <img src="./img/Vilaku.png" alt="" class="img-fluid">
-
-                </div>
-                <div class="col-sm-3">
-                    <p class="maveera ">
-                        27
-                        <span class="maveera-in">மாவீரர் துயிலுமில்லங்கள்</span>
-                    </p>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <h4 class="home-rem">லெப்டினன்ட் சங்கர்(சுரேஸ்)</h4>
-            </div>
-            <hr>
-            <div class="col-sm-12">
-                <p class="about-text">
-                    தமிழீழ தேசத்தின் விடியலுக்காய் தம்முயிரை ஈன்ற மானமாவீரர்களின் தரவுகளை இலகுவழியில் நெறிமுறைப்படுத்துவதே எமது நோக்கமாகும்.
-                </p>
-            </div>
-            <div class="row no-gutters">
-                <div class="col-sm-6 ">
-                    <form class="form-inline my-2 my-lg-0 mx-auto" action="/search">
-                        <div class="search-holder">
-                            <button type="submit">
-                                <span></span>
-                            </button>
-                            <div class="input-holder">
-                                <input name="name" @bind="searchValue" type="search" @bind:event="oninput" placeholder="தேடல்" class="search-input">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-6">
-                    <h3></h3>
-                    <a href="/search" class="link" id="suggest-random-casualty">மாவீரர் விபரம் <span class=""></span></a>
-
-
-                </div>
-            </div>
-        </div>
+<div class="container">
+<div class="card card_body">
+    <div class="card-body ">
+        <h5 class="card-title card_title">நினைவு வணக்கம்</h5>
+        <p class="card-text">
+            தமிழீழ தாய் மண்ணின் விடியலுக்காய் இன்றைய நாளில் தமது இன்னுயிர்களை ஈகம் செய்த
+            மாவீரர்களின் விபரம்.
+        </p>
     </div>
 </div>
+</div>
+@if (paginatedList == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="container mt-5">
+                <div class="layer">
+                    @if (paginatedList.Items.Any())
+                    {
+                        <div class="row p-4">
+                            @foreach (var hero in paginatedList.Items)
+                            {
+                                <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+                                    <div class=" mb-3" style="width: 100% !important;">
+                                        <div class="main-card">
+                                            <a href="/hero/@hero.Id">
+                                                <div class="image-top" style="background-image:url('images/hero/@hero.Id\.jpg'), url('img/default.jpg')">
+                                                </div>
+                                                <div class="card-head">
+                                                    <p class="name-1">@hero.Rank @hero.Name</p>
+                                                    <p class="realname">@hero.RealName&nbsp;</p>
+                                                </div>
+                                                <div class="card-info">
+                                                    <p class="address">@hero.Address</p>
+                                                    <p class="date">வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
+                                                </div>
+                                                <button class="btn-default nav-details">@hero.Name பற்றி முழுமையான விபரம்</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
+                               HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
+                        </Pager>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-4 no-records">
+                                <div class="card text-center">
+                                    <div class="card-header">
+                                        No records found.
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">மாவீரர் விபரம் எதுவும் கிடைக்கவில்லை.</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+}
+<app-categories></app-categories>
+<img src="img/banner.png" class="img-responsive" style="width: 100%;"/>
+
+
+<style>
+    .image-top{
+    -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-position: center;
+        
+     min-height: 318px;
+    }
+    .main-card{
+        font-family: 'Arima Madurai', cursive;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+    .card-head{
+        font-weight: 700;
+        color: black;
+        padding: 6px;
+    background-color: #f3f3f3;
+    }
+    .name-1{
+        margin-bottom: 0;
+        font-size: 1.1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    }
+    .realname{
+        font-size: 1rem;    
+        margin-bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    }
+    .card-info{
+        padding: 6px;
+        height: 85px;
+    }
+    .address{
+        font-size: 0.9rem;    
+        margin-bottom: 10px;
+        font-weight: 500;
+        color: black;
+    }
+    .date{
+        font-size: 0.9rem;    
+        margin-bottom: 0;
+        font-weight: 500;
+        color: black;
+    }
+    .nav-details{
+        font-size: 0.8rem;    
+        font-weight: 500;
+        color: black;
+        width: 100%;
+    text-overflow: ellipsis;
+     white-space: nowrap; 
+  overflow: hidden;
+    }
+</style>
 
 @code
 {
-    string searchValue;
+    PagedListDto<HeroDto> paginatedList;
+    int pageNr = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchData();
+    }
+
+    private async Task FetchData()
+    {
+        var result = await HeroRepository.Memorial(pageNr, 15, null, null);
+        paginatedList = new PagedListDto<HeroDto>
+        {
+            CurrentPage = result.CurrentPage,
+            TotalPages = result.TotalPages,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount,
+            HasNext = result.HasNext,
+            HasPrevious = result.HasPrevious,
+            Items = Mapper.Map<List<HeroDto>>(result)
+        };
+    }
+
+    public async void PageIndexChanged(int newPageNumber)
+    {
+        if (newPageNumber < 1 || newPageNumber > paginatedList.TotalPages)
+        {
+            return;
+        }
+        pageNr = newPageNumber;
+        await FetchData();
+        StateHasChanged();
+    }
 }
+

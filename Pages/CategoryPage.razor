@@ -1,5 +1,6 @@
 ﻿@page "/category"
 @using EelamHeroes.Repository.Interface
+@using System.Security.Policy
 @inject IPostRepository PostRepository
 @if (categories == null)
 {
@@ -14,17 +15,53 @@ else
         <div class="row projects">
             @foreach (var category in categories)
             {
-                <div class="col-sm-6 col-lg-4 item">
-                    <a class="img-hover-zoom--brightness" href="category/@category.Id">
-                        <img class="img-card" src="@category.ImagePath"/>
-                        <h3 class="name">@category.Name</h3>
-                    </a>
+                
+                <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+                    <div class=" mb-3" style="width: 100% !important;">
+                        <div class="main-card">
+                            <a href="/category/@category.Id">
+                                <div class="image-top" style="background-image:url('@category.ImagePath.Replace("\\", "/")'), url('https://www.suntip.nl/assets/img/image-not-found.png')">
+                                </div>
+                                <div class="card-head">
+                                    <p class="title">@category.Name</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
     </div>
 }
-
+<style>
+    
+    .card-head{
+        font-weight: 700;
+        color: black;
+        padding: 6px;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    font-family: 'Arima Madurai', cursive;
+    }
+    .title{
+        margin-bottom: 0;
+        font-size: 1.1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: black !important;
+    text-align: center;
+    }
+    .image-top{
+        -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            background-position: center;
+            
+         min-height: 225px;
+        }
+</style>
 @code {
     private IEnumerable<Models.Entity.Category> categories;
 

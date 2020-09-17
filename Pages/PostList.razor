@@ -20,15 +20,17 @@ else
         <div class="row">
             @foreach (var post in paginatedList.Items)
             {
-                <div class="col-sm-6 col-md-4">
-                    <div class="card mb-4">
-                        <a href="post/@post.Id">
-                            <img class="card-img-top img-fluid" src="@post.ImagePath" onerror="this.src='https://www.suntip.nl/assets/img/image-not-found.png'" alt="..."/>
-                            <div class="card-body">
-                                <h5 class="card-title">@post.Title</h5>
-                                <p class="card-text">@post.Excerpt</p>
-                            </div>
-                        </a>
+                <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+                    <div class=" mb-3" style="width: 100% !important;">
+                        <div class="main-card">
+                            <a href="/post/@post.Id">
+                                <div class="image-top" style="background-image:url('@post.ImagePath.Replace("\\", "/")'), url('https://www.suntip.nl/assets/img/image-not-found.png')">
+                                </div>
+                                <div class="card-head">
+                                    <p class="title">@post.Title</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             }
@@ -43,6 +45,34 @@ else
     .row > div[class*='col-'] {
           display: flex;
       }
+      .main-card{
+              font-family: 'Arima Madurai', cursive;
+              box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+          }
+          .card-head{
+              font-weight: 700;
+              color: black;
+              padding: 6px;
+          background-color: #f3f3f3;
+          }
+          .title{
+              margin-bottom: 0;
+              font-size: 1.1rem;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          text-align: center;
+          }
+          .image-top{
+              -webkit-background-size: cover;
+                  -moz-background-size: cover;
+                  -o-background-size: cover;
+                  background-size: cover;
+                  background-position: center;
+                  background-repeat:no-repeat;
+                  
+               min-height: 225px;
+              }
 </style>
 
 @code {

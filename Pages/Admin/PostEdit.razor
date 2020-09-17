@@ -73,7 +73,8 @@ else
                     <div >
                         <SfRichTextEditor @bind-Value="model.Body">
                             <RichTextEditorToolbarSettings Items="@Tools"></RichTextEditorToolbarSettings>
-                            <RichTextEditorImageSettings SaveFormat="SaveFormat.Base64"></RichTextEditorImageSettings>
+                            <RichTextEditorImageSettings SaveUrl="/api/Image/Save" Path="./" ></RichTextEditorImageSettings>
+                            <RichTextEditorEvents OnImageUploadSuccess="@ImageUploadSuccess"> </RichTextEditorEvents>
                         </SfRichTextEditor>
                     </div>
                 </div>
@@ -82,9 +83,14 @@ else
         </RadzenTemplateForm>
     </div>
 }
-
+<style>
+    .e-content{
+    min-height: 450px !important;
+    }
+</style>
 @code {
 
+    public string[] header { get; set; }
     public object[] Tools = new object[]
     {
         "Bold", "Italic", "Underline", "StrikeThrough",
@@ -93,7 +99,15 @@ else
         "Outdent", "Indent", "|",
         "CreateLink", "Image", "|", "Undo", "Redo"
     };
+    private void ImageUploadSuccess(ImageSuccessEventArgs args)
+    {
+        var headers = args.Response.Headers.ToString();
+        header = headers.Split("name: ");
+        header = header[1].Split("\r");
 
+    // Update the modified image name to display a image in the editor.
+        args.File.Name = header[0];
+    }
     private IEnumerable<Category> categories;
     private PostAddOrUpdateViewModel model;
     string headerText;
@@ -129,6 +143,11 @@ else
         if (string.IsNullOrEmpty(model.ImagePath))
         {
             notificationService.Notify(new NotificationMessage {Severity = NotificationSeverity.Error, Summary = "Image is required", Duration = 4000});
+            return;
+        }
+        if (string.IsNullOrEmpty(model.Excerpt))
+        {
+            notificationService.Notify(new NotificationMessage {Severity = NotificationSeverity.Error, Summary = "Excerpt is required", Duration = 4000});
             return;
         }
         if (string.IsNullOrEmpty(model.Body))

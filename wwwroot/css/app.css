@@ -1,0 +1,92 @@
+.header {
+    background-color: #0f5738 !important;
+}
+
+.card_body {
+    background-color: #f58300  !important;
+    font-family: "Kavivanar", cursive;
+    margin-top: 20px;
+    margin-left: 20%;
+    text-align: center;
+    width: 60%;
+}
+
+.card_title {
+    font-family: "Coiny", cursive;
+    text-align: center;
+    text-decoration: underline;
+    color: white;
+}
+h2 {
+    margin-top: 20px;
+    font-family: "Kavivanar", cursive;
+    font-weight: bolder;
+    font-size: 25px;
+    text-align: center;
+}
+.item {
+    font-size: small;
+    width: 300px;
+    height: 400px;
+    display: inline-block;
+    line-height: normal;
+    margin: 5px;
+    text-align: left;
+}
+.image-box {
+    margin-left: 25px;
+    margin-top: 25px;
+}
+.item p {
+    margin-bottom: 0rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.parent {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.image1 {
+    position: relative;
+    height: 250px;
+    width: 250px;
+    top: 0;
+    left: 0;
+}
+.image2 {
+    position: absolute;
+    height: 185px;
+    width: 180px;
+    top: 26px;
+    left: 33px;
+}
+
+.img-logo {
+    height: 100;
+    width: 200px;
+}
+.list {
+    margin: auto;
+    text-align: center;
+    width: 95%;
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .card_body {
+        margin-left: 5%;
+        width: 90%;
+    }
+}
+
+
+.card1-img{
+    height: 150px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+}
