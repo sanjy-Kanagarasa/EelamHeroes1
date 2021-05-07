@@ -1,17 +1,17 @@
 ﻿@page "/admin/hero-image/{heroId}"
-@attribute [Authorize(Roles = "Admin")] 
+@attribute [Authorize(Roles = "Admin")]
 
 @using EelamHeroes.Models.Entity
 @using EelamHeroes.Models.ViewModel
 @using EelamHeroes.Repository.Interface
 @using Radzen
 @using AutoMapper
-@using Microsoft.AspNetCore.Http.Extensions
 
+@inject NotificationService NotificationService
+@inject NavigationManager Navigation
 @inject IGeneralRepository Repository
 @inject IHeroRepository HeroRepository
 @inject IMapper Mapper
-@inject NavigationManager NavigationManager
 
 
 @if (model == null)
@@ -21,7 +21,7 @@
 else
 {
     <div class="container">
-        <RadzenNotification/>
+        <RadzenNotification />
         <RadzenTemplateForm TItem="HeroAddOrUpdateViewModel" Data="@model" Submit="@OnSubmit">
             <RadzenFieldset Text="@($"{model.RealName}")">
 
@@ -29,10 +29,10 @@ else
                     <div class="col">
 
                         <RadzenUpload Accept="image/*" Url="@($"upload/hero/{HeroId}")" Style="margin-bottom: 20px;"
-                                      Complete="@Completed"/>
-                        @if (!string.IsNullOrEmpty(" rgr"))
+                                      Complete="@Completed" />
+                        @if (!string.IsNullOrEmpty(HeroId))
                         {
-                            <RadzenImage src="@($"images/hero/{HeroId}.jpg")" onerror="this.src='images/hero/default.jpg'" Style="max-width:200px">
+                            <RadzenImage src="@($"images/hero/{HeroId}.jpg")" Style="max-width:200px">
                             </RadzenImage>
                         }
                     </div>
@@ -61,17 +61,37 @@ else
             model = Mapper.Map<HeroAddOrUpdateViewModel>(hero);
         }
     }
-
-    void OnSubmit(HeroAddOrUpdateViewModel model)
+    async Task OnSubmit(HeroAddOrUpdateViewModel model)
     {
-        HeroRepository.AddOrUpdate(model);
+        try
+        {
+            await HeroRepository.AddOrUpdate(model);
+            var message = new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Successfully updated!",
+                Duration = 4000
+            };
+            NotificationService.Notify(message);
+        }
+        catch
+        {
+
+            var message = new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Something went wrong!",
+                Duration = 4000
+            };
+            NotificationService.Notify(message);
+        }
     }
 
     void Completed(UploadCompleteEventArgs args)
     {
-        
-        NavigationManager.NavigateTo("hero/" + HeroId, true);
-    //model.ImagePath = args.RawResponse;
+
+        Navigation.NavigateTo("hero/" + HeroId, true);
+        //model.ImagePath = args.RawResponse;
     }
 
 }

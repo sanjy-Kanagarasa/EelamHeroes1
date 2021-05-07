@@ -26,39 +26,39 @@ else
             <RadzenFieldset Text="@headerText">
                 <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-4 align-right">
-                        <RadzenLabel Text="Title"/>
+                        <RadzenLabel Text="Title" />
                     </div>
                     <div class="col">
-                        <RadzenTextBox style="display: block" Name="FirstName" @bind-Value="model.Title"/>
-                        <RadzenRequiredValidator Component="FirstName" Text="Title name is required" Style="position: absolute"/>
+                        <RadzenTextBox style="display: block" Name="FirstName" @bind-Value="model.Title" />
+                        <RadzenRequiredValidator Component="FirstName" Text="Title name is required" Style="position: absolute" />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-4">
-                        <RadzenLabel Text="Category"/>
+                        <RadzenLabel Text="Category" />
                     </div>
                     <div class="col">
                         <RadzenDropDown Data="@categories" Name="Rank" @bind-Value="model.CategoryId"
-                                        TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
+                                        TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext" />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-4">
-                        <RadzenLabel Text="Excerpt"/>
+                        <RadzenLabel Text="Excerpt" />
                     </div>
                     <div class="col">
-                        <RadzenTextArea @bind-Value="model.Excerpt"/>
-                        <RadzenRequiredValidator Component="FirstName" Text="Excerpt is required" Style="position: absolute"/>
+                        <RadzenTextArea @bind-Value="model.Excerpt" />
+                        <RadzenRequiredValidator Component="FirstName" Text="Excerpt is required" Style="position: absolute" />
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-4">
-                        <RadzenLabel Text="Image"/>
+                        <RadzenLabel Text="Image" />
                     </div>
                     <div class="col">
 
                         <RadzenUpload Accept="image/*" Url="upload/single" Style="margin-bottom: 20px;"
-                                      Complete="@Completed"/>
+                                      Complete="@Completed" />
                         @if (!string.IsNullOrEmpty(model.ImagePath))
                         {
                             <RadzenImage Path="@model.ImagePath" Style="max-width:200px">
@@ -68,18 +68,19 @@ else
                 </div>
                 <div class="row" style="margin-bottom: 20px">
                     <div class="col">
-                        <RadzenLabel Text="Body"/>
+                        <RadzenLabel Text="Body" />
                     </div>
-                    <div >
-                        <SfRichTextEditor @bind-Value="model.Body">
+                    <div>
+                        <SfRichTextEditor @bind-Value="@model.Body">
                             <RichTextEditorToolbarSettings Items="@Tools"></RichTextEditorToolbarSettings>
-                            <RichTextEditorImageSettings SaveUrl="/api/Image/Save" Path="./" ></RichTextEditorImageSettings>
+                            <RichTextEditorImageSettings SaveUrl="/api/Image/Save" Path="./"></RichTextEditorImageSettings>
                             <RichTextEditorEvents OnImageUploadSuccess="@ImageUploadSuccess"> </RichTextEditorEvents>
                         </SfRichTextEditor>
                     </div>
                 </div>
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Disabled="isDisabled" Text="Submit"></RadzenButton>
             </RadzenFieldset>
+            
         </RadzenTemplateForm>
     </div>
 }
@@ -89,6 +90,8 @@ else
     }
 </style>
 @code {
+
+    bool isDisabled = false;
 
     public string[] header { get; set; }
     public object[] Tools = new object[]
@@ -105,7 +108,7 @@ else
         header = headers.Split("name: ");
         header = header[1].Split("\r");
 
-    // Update the modified image name to display a image in the editor.
+        // Update the modified image name to display a image in the editor.
         args.File.Name = header[0];
     }
     private IEnumerable<Category> categories;
@@ -128,8 +131,8 @@ else
             var post = await PostRepository.GetPostById(int.Parse(PostId));
             model = Mapper.Map<PostAddOrUpdateViewModel>(post);
         }
-    //model = new PostAddOrUpdateViewModel();
-    //ranks = await Repository.GetRanks();
+        //model = new PostAddOrUpdateViewModel();
+        //ranks = await Repository.GetRanks();
         categories = await PostRepository.GetCategories();
     }
 
@@ -147,7 +150,12 @@ else
         }
         if (string.IsNullOrEmpty(model.Excerpt))
         {
-            notificationService.Notify(new NotificationMessage {Severity = NotificationSeverity.Error, Summary = "Excerpt is required", Duration = 4000});
+            notificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Excerpt is required", Duration = 4000 });
+            return;
+        }
+        if (model.Excerpt.Count() > 200)
+        {
+            notificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Excerpt max length is 200.", Duration = 4000 });
             return;
         }
         if (string.IsNullOrEmpty(model.Body))
@@ -155,6 +163,7 @@ else
             notificationService.Notify(new NotificationMessage {Severity = NotificationSeverity.Error, Summary = "Body is required", Duration = 4000});
             return;
         }
+        isDisabled = true;
         await PostRepository.AddOrUpdate(model);
         NavigationManager.NavigateTo("category/" + model.CategoryId, true);
     }

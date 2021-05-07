@@ -10,6 +10,9 @@ using EelamHeroes.Models.Dto;
 using EelamHeroes.Models.Entity;
 using EelamHeroes.Models.ViewModel;
 using EelamHeroes.Repository.Interface;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.IO;
 
 namespace EelamHeroes.Repository
 {
@@ -23,7 +26,13 @@ namespace EelamHeroes.Repository
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
+        public static void SaveJpeg()
+        {
+            using (var ms = new MemoryStream())
+            {
 
+            }
+        }
         public async Task<IEnumerable<HeroDto>> Get(int? dYear, int? dMonth, int? dDay, int? districtId)
         {
             return await Task.Run(() =>
@@ -155,5 +164,7 @@ namespace EelamHeroes.Repository
                 await dbContext.SaveChangesAsync();
             }
         }
+
+
     }
 }

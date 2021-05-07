@@ -56,14 +56,21 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">முகப்பு <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/search">Maaveerar</a>
+            <li class="nav-item active">
+                <a class="nav-link" href="/search">தேடல்<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/category">Post</a>
-            </li>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle white" href="/category" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    பதிவுகள்
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item black" href="category/1">குருதிச்சுவடுகள்</a>
+                    <a class="dropdown-item black" href="category/2">படைநடவடிக்கைகள்</a>
+                    <a class="dropdown-item black" href="category/3">துயிலும் இல்லங்கள்</a>
+                </div>
+            </div>
         </ul>
         <AuthorizeView>
             <Authorized>

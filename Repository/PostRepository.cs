@@ -54,6 +54,7 @@ namespace EelamHeroes.Repository
         }
         public async Task AddOrUpdate(PostAddOrUpdateViewModel model)
         {
+            model.Body = model.Body.Replace("background-color: rgb(255, 255, 255);", "");
             var post = await dbContext.Posts.FindAsync(model.Id);
             if (post != null)
             {

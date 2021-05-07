@@ -210,7 +210,7 @@ input, select, textarea {
 }
 .soldier p {
     font-family: 'Mukta Malar',sans-serif;
-    color: #4a4746;
+    color: #000000;
 }
 
 .soldier .btn-default {
@@ -409,7 +409,111 @@ input, select, textarea {
   .row {
       display: flex;
       flex-wrap: wrap;
-  }/*
+  }
+  .card-image{
+      border: solid 1px black;
+  }
+.card-name {
+    font-family: 'Arima Madurai', cursive;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #fa0133;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.5rem;
+    margin-bottom: 0;
+}
+.card-real-name {
+    font-family: 'Arima Madurai', cursive;
+    font-size: 0.80rem;
+    font-weight: bolder;
+    white-space: nowrap;
+    color: black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.5rem;
+    padding: 0 0.5rem;
+}
+.card-address {
+    font-family: 'Kavivanar', cursive;
+    font-size: 0.75rem;
+    font-weight: bolder;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.5rem;
+}
+
+.card-death {
+    font-family: 'Coiny', cursive;
+    color: black;
+    font-size: 0.8rem;
+}
+
+.card-birth {
+    font-family: 'Coiny', cursive;
+    color: black;
+    font-size: 0.8rem;
+}
+
+.card-address-print {
+    font-family: 'Kavivanar', cursive;
+    font-size: 22px;
+    font-weight: bolder;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-incident-print {
+    font-family: 'Kavivanar', cursive;
+    font-size: 16px;
+    font-weight: bolder;
+    color: black;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    padding: 0 0.5rem;
+}
+.card-name-print {
+    font-family: 'Arima Madurai', cursive;
+    font-size: 35px;
+    font-weight: bolder;
+    color: #fa0133;
+    margin-bottom: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.5rem;
+}
+
+.card-real-name-print {
+    font-family: 'Arima Madurai', cursive;
+    font-size: 30px;
+    font-weight: bolder;
+    white-space: nowrap;
+    color: black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0px;
+    padding: 0 0.5rem;
+}
+.card-death-print {
+    font-family: 'Coiny', cursive;
+    color: black;
+    font-size: 25px;
+}
+
+.card-birth-print {
+    font-family: 'Coiny', cursive;
+    color: black;
+    font-size: 25px;
+}
+  /*
   .card{
       border-radius: 4px;
       background: #fff;

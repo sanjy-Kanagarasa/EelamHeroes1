@@ -73,6 +73,11 @@ h2 {
     text-align: center;
     width: 95%;
 }
+.img-bg {
+    position: absolute;
+    z-index: 20;
+    opacity: 0.15;
+}
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */
     .card_body {
@@ -89,4 +94,48 @@ h2 {
     -o-background-size: cover;
     background-size: cover;
     background-position: center;
+}
+
+
+
+/* tamil */
+@font-face {
+    font-family: 'Coiny';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/coiny/v6/gyByhwU1K989PUwKGFWfOw.woff2) format('woff2');
+    unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
+}
+
+/* tamil */
+@font-face {
+    font-family: 'Kavivanar';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/kavivanar/v6/o-0IIpQgyXYSwhxP7_Jr8zRAW_0.woff2) format('woff2');
+    unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
+}
+/* tamil */
+@font-face {
+    font-family: 'Arima Madurai';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/arimamadurai/v6/t5tmIRoeKYORG0WNMgnC3seB3SjPr6OH.woff2) format('woff2');
+    unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
+}
+/* tamil */
+@font-face {
+    font-family: 'Baloo Thambi';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/baloothambi/v7/va9B4kXJzNhTFoA7CYcS8sHeUBf6TF0.woff2) format('woff2');
+    unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
+}
+/* tamil */
+@font-face {
+    font-family: 'Mukta Malar';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/muktamalar/v7/MCoXzAXyz8LOE2FpJMxZqIvpJ_U5wA.woff2) format('woff2');
+    unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
 }

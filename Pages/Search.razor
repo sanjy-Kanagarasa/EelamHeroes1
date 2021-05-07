@@ -19,30 +19,30 @@
                 </div>
 
 
-                <div >
+                <div>
                     <button type="button" @onclick="OnClearFilter" class="btn btn-link">Clear Filters</button>
-                    <RadzenTextBox Placeholder="இயக்கப்பெயர்" @bind-Value="filter.Name" Style="margin-bottom: 10px"/>
-                    <RadzenTextBox Placeholder="இயற்பெயர்" @bind-Value="filter.RealName" Style="margin-bottom: 10px"/>
+                    <RadzenTextBox Placeholder="இயக்கப்பெயர்" @bind-Value="filter.Name" Style="margin-bottom: 10px" />
+                    <RadzenTextBox Placeholder="இயற்பெயர்" @bind-Value="filter.RealName" Style="margin-bottom: 10px" />
                     <RadzenDatePicker Placeholder="வீரப்பிறப்பு நாள்" @bind-Value="filter.BirthDate" DateFormat="d" Change="@(args => Change(args, "DatePicker", "dd/MM/yyyy"))"
-                                      Style="margin-bottom: 10px"/>
+                                      Style="margin-bottom: 10px" />
                     <p>வீரச்சாவு</p>
                     <RadzenDropDown AllowClear="true" Placeholder="நாள்" Data="@days" @bind-Value="filter.DeathDay"
-                                    Style="margin-bottom: 10px"/>
+                                    Style="margin-bottom: 10px" />
                     <RadzenDropDown AllowClear="true" Placeholder="மாதம்" Data="@months" @bind-Value="filter.DeathMonth"
-                                    Style="margin-bottom: 10px"/>
+                                    Style="margin-bottom: 10px" />
                     <RadzenDropDown AllowClear="true" Placeholder="ஆண்டு" Data="@years" @bind-Value="filter.DeathYear"
-                                    Style="margin-bottom: 10px"/>
+                                    Style="margin-bottom: 10px" />
 
                     <RadzenDropDown AllowClear="true" Placeholder="நிலை" Data="@ranks" @bind-Value="filter.RankId"
-                                    TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px"/>
+                                    TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px" />
                     <RadzenDropDown AllowClear="true" Placeholder="மாவட்டரீதியாக" Data="@districts" @bind-Value="filter.DistrictId"
-                                    TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px"/>
+                                    TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px" />
                     <RadzenDropDown AllowClear="true" Placeholder="துயிலுமில்லவாரியாக" Data="@restingHomes" @bind-Value="filter.RestingHomeId"
-                                    TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px"/>
+                                    TextProperty="Name" ValueProperty="Id" Style="margin-bottom: 10px" />
 
                     <button class="ui_grey ui_grey_right filter_btn link1" @onclick="OnSearch">தேடுக</button>
 
-                </div >
+                </div>
 
             </div>
         </div>
@@ -64,6 +64,7 @@
                                         <div class=" mb-3" style="width: 100% !important;">
                                             <div class="soldier cf [[+alt]]">
                                                 <a href="/hero/@hero.Id">
+                                                    <img src="@($"images/hero/{@hero.Id}.jpg")" onerror="this.src='images/hero/default.jpg'" class="card-img img-fluid rounded mx-auto d-block img-bg" style="height: 100%;">
                                                     <div class="head">
                                                         <p class="name" title="F Heath">@hero.Name</p>
                                                         <p class="small">@hero.RealName&nbsp;</p>
@@ -77,6 +78,7 @@
                                                 </a>
                                             </div>
                                         </div>
+
                                     </div>
                                 }
                             </div>
@@ -112,9 +114,9 @@
     IEnumerable<District> districts;
     IEnumerable<Rank> ranks;
     IEnumerable<RestingHome> restingHomes;
-    IEnumerable<int> days = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
+    IEnumerable<int> days = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 };
     IEnumerable<int> years;
-    IEnumerable<int> months = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    IEnumerable<int> months = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
     //IEnumerable<HeroDto> heroes;
     PagedListDto<HeroDto> paginatedList;
 
@@ -179,7 +181,7 @@
         StateHasChanged();
     }
 
-    IEnumerable<DateTime> dates = new DateTime[] {DateTime.Today.AddDays(-1), DateTime.Today.AddDays(1)};
+    IEnumerable<DateTime> dates = new DateTime[] { DateTime.Today.AddDays(-1), DateTime.Today.AddDays(1) };
 
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 

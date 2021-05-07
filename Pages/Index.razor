@@ -29,36 +29,67 @@ else
                 <div class="layer">
                     @if (paginatedList.Items.Any())
                     {
-                        <div class="row p-4">
-                            @foreach (var hero in paginatedList.Items)
-                            {
-                                <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
-                                    <div class=" mb-3" style="width: 100% !important;">
-                                        <div class="main-card">
-                                            <a href="/hero/@hero.Id">
-                                                <div class="image-top" style="background-image:url('images/hero/@hero.Id\.jpg'), url('img/default.jpg')">
-                                                </div>
-                                                <div class="card-head">
-                                                    <p class="name-1">@hero.Rank @hero.Name</p>
-                                                    <p class="realname">@hero.RealName&nbsp;</p>
-                                                </div>
-                                                <div class="card-info">
-                                                    <p class="address">@hero.Address</p>
-                                                    <p class="date">வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
-                                                </div>
-                                                <button class="btn-default nav-details">@hero.Name பற்றி முழுமையான விபரம்</button>
-                                            </a>
+                    <div class="row p-4" style="background: #FEFFD2">
+                        @foreach (var hero in paginatedList.Items)
+                        {
+                        @*<div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+            <div class=" mb-3" style="width: 100% !important;">
+                <div class="main-card">
+                    <a href="/hero/@hero.Id">
+                        <div class="image-top" style="background-image:url('images/hero/@hero.Id\.jpg'), url('img/default.jpg')">
+                        </div>
+                        <div class="card-head">
+                            <p class="name-1">@hero.Rank @hero.Name</p>
+                            <p class="realname">@hero.RealName&nbsp;</p>
+                        </div>
+                        <div class="card-info">
+                            <p class="address">@hero.Address</p>
+                            <p class="date">வீரச்சாவு @hero.DeathDate.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <button class="btn-default nav-details">@hero.Name பற்றி முழுமையான விபரம்</button>
+                    </a>
+                </div>
+            </div>
+        </div>*@
+                        <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+                            <a href="/hero/@hero.Id">
+                                <div class="m-1" style="border-style: solid;border-color: red; background: #feff99;">
+                                    <div class="row" style="border: 2px none red">
+                                        <div class="col-sm-12 d-flex"><img style="max-height: 52px" class="img-fluid" src="img/veeravanakkam.png"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 offset-2" style="margin-bottom: 10px;">
+                                            <img src="@($"images/hero/{@hero.Id}.jpg")" onerror="this.src='images/hero/default.jpg'" class="card-img img-fluid rounded mx-auto d-block" style="border: solid 3px black;" alt="...">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 card-death" style="float:left">
+                                            <p class="text-center mb-0" style="line-height: 1">வீரப்பிறப்பு</p>
+                                            <p class="text-center mb-1">@(hero.BirthDate.HasValue ? hero.BirthDate?.ToString("dd-MM-yyyy") : "00-00-0000") </p>
+                                        </div>
+                                        <div class="col-6 card-birth" style="float:right">
+                                            <p class="text-center mb-0" style="line-height: 1">வீரச்சாவு</p>
+                                            <p class="text-center mb-1">@hero.DeathDate.ToString("dd-MM-yyyy")</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="text-center card-name"><spen style="font-family: 'Kavivanar', cursive; font-size: 16px;">@hero.Rank</spen> @hero.Name</p>
+                                            <p class="text-center card-real-name">@hero.RealName&nbsp;</p>
+                                            <p class="text-center card-address">@hero.Address</p>
                                         </div>
                                     </div>
                                 </div>
-                            }
+                            </a>
                         </div>
-                        <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
-                               HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
-                        </Pager>
-                    }
-                    else
-                    {
+                        }
+                    </div>
+                            <Pager PageIndex=@paginatedList.CurrentPage TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
+                                   HasNextPage=@paginatedList.HasNext HasPreviousPage=@paginatedList.HasPrevious>
+                            </Pager>
+                        }
+                        else
+                        {
                         <div class="row">
                             <div class="col-md-4 no-records">
                                 <div class="card text-center">
@@ -71,8 +102,8 @@ else
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
+                        }
+                    </div>
             </div>
 }
 <app-categories></app-categories>
@@ -81,7 +112,7 @@ else
 
 <style>
     .image-top{
-    -webkit-background-size: cover;
+        -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;

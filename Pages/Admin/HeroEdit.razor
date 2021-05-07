@@ -1,5 +1,5 @@
 ﻿@page "/admin/hero/{heroId}"
-@attribute [Authorize(Roles = "Admin")] 
+@attribute [Authorize(Roles = "Admin")]
 
 @using EelamHeroes.Models.Entity
 @using EelamHeroes.Models.ViewModel
@@ -7,6 +7,7 @@
 @using Radzen
 @using AutoMapper
 
+@inject NotificationService NotificationService
 @inject IGeneralRepository Repository
 @inject IHeroRepository HeroRepository
 @inject IMapper Mapper
@@ -17,123 +18,124 @@
 }
 else
 {
-    <form class="container">
-        <RadzenTemplateForm TItem="HeroAddOrUpdateViewModel" Data="@model" Submit="@OnSubmit">
-            <RadzenFieldset Text="@headerText">
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="இயற்பெயர்"/>
-                    </div>
-                    <div class="col">
-                        <RadzenTextBox style="display: block" Name="Name" @bind-Value="model.Name"/>
-                        <RadzenRequiredValidator Component="Name" Text="Name is required" Style="position: absolute"/>
-                    </div>
+<form class="container">
+    <RadzenNotification />
+    <RadzenTemplateForm TItem="HeroAddOrUpdateViewModel" Data="@model" Submit="@OnSubmit">
+        <RadzenFieldset Text="@headerText">
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="இயற்பெயர்" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="இயக்கப்பெயர்"/>
-                    </div>
-                    <div class="col">
-                        <RadzenTextBox style="display: block" Name="RealName" @bind-Value="model.RealName"/>
-                        <RadzenRequiredValidator Component="RealName" Text="RealName is required" Style="position: absolute"/>
-                    </div>
+                <div class="col">
+                    <RadzenTextBox style="display: block" Name="Name" @bind-Value="model.Name" />
+                    <RadzenRequiredValidator Component="Name" Text="Name is required" Style="position: absolute" />
                 </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="இயக்கப்பெயர்" />
+                </div>
+                <div class="col">
+                    <RadzenTextBox style="display: block" Name="RealName" @bind-Value="model.RealName" />
+                    <RadzenRequiredValidator Component="RealName" Text="RealName is required" Style="position: absolute" />
+                </div>
+            </div>
 
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="வீரப்பிறப்பு"/>
-                    </div>
-                    <div class="col">
-                        <RadzenDatePicker @bind-Value="model.BirthDate" class="form-control-plaintext" DateFormat="d"/>
-                    </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="வீரப்பிறப்பு" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="வீரச்சாவு"/>
-                    </div>
-                    <div class="col">
-                        <RadzenDatePicker @bind-Value="model.DeathDate" class="form-control-plaintext" DateFormat="d"/>
-                    </div>
+                <div class="col">
+                    <RadzenDatePicker @bind-Value="model.BirthDate" class="form-control-plaintext" DateFormat="dd-MM-yyyy" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="முகவரி"/>
-                    </div>
-                    <div class="col">
-                        <RadzenTextArea @bind-Value="model.Address" class="form-control-plaintext" Name="Address"/>
-                        <RadzenRequiredValidator Component="Address" Text="Address is required" Style="position: absolute"/>
-                    </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="வீரச்சாவு" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="நிலை"/>
-                    </div>
-                    <div class="col">
-                        <RadzenDropDown @bind-Value="model.RankId" Data="@ranks" Name="Rank"
-                                         TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
-                        <RadzenRequiredValidator Component="Rank" Text="Rank is required" Style="position: absolute"/>
-                    </div>
+                <div class="col">
+                    <RadzenDatePicker @bind-Value="model.DeathDate" class="form-control-plaintext" DateFormat="dd-MM-yyyy" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="பிரிவு"/>
-                    </div>
-                    <div class="col">
-                        <RadzenDropDown @bind-Value="model.DivisionId" Data="@divisions" Name="Division"
-                                         TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
-                        <RadzenRequiredValidator Component="Division" Text="Division is required" Style="position: absolute"/>
-                    </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="முகவரி" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="பால்"/>
-                    </div>
-                    <div class="col">
-                        <RadzenDropDown @bind-Value="model.GenderId" Data="@genders" Name="Gender"
-                                         TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
-                        <RadzenRequiredValidator Component="Gender" Text="Gender is required" Style="position: absolute"/>
-                    </div>
+                <div class="col">
+                    <RadzenTextArea @bind-Value="model.Address" class="form-control-plaintext" Name="Address" />
+                    <RadzenRequiredValidator Component="Address" Text="Address is required" Style="position: absolute" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="மாவட்டம்"/>
-                    </div>
-                    <div class="col">
-                        <RadzenDropDown @bind-Value="model.DistrictId" Data="@districts" Name="District"
-                                         TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
-                        <RadzenRequiredValidator Component="District" Text="District is required" Style="position: absolute"/>
-                    </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="நிலை" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="துயிலுமில்லம்"/>
-                    </div>
-                    <div class="col">
-                        <RadzenDropDown @bind-Value="model.RestingHomeId" Data="@restingHomes" Name="RestingHome"
-                                         TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext"/>
-                        <RadzenRequiredValidator Component="RestingHome" Text="RestingHome is required" Style="position: absolute"/>
-                    </div>
+                <div class="col">
+                    <RadzenDropDown @bind-Value="model.RankId" Data="@ranks" Name="Rank"
+                                    TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext" />
+                    <RadzenRequiredValidator Component="Rank" Text="Rank is required" Style="position: absolute" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="நிகழ்வு"/>
-                    </div>
-                    <div class="col">
-                        <RadzenTextArea @bind-Value="model.Incident" Rows="3" class="form-control-plaintext"/>
-                    </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="பிரிவு" />
                 </div>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-md-4 align-right">
-                        <RadzenLabel Text="மேலதிக விபரம்"/>
-                    </div>
-                    <div class="col">
-                        <RadzenTextArea @bind-Value="model.Comment" Rows="3" class="form-control-plaintext"/>
-                    </div>
+                <div class="col">
+                    <RadzenDropDown @bind-Value="model.DivisionId" Data="@divisions" Name="Division"
+                                    TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext" />
+                    <RadzenRequiredValidator Component="Division" Text="Division is required" Style="position: absolute" />
                 </div>
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Save"></RadzenButton>
-            </RadzenFieldset>
-        </RadzenTemplateForm>
-    </form>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="பால்" />
+                </div>
+                <div class="col">
+                    <RadzenDropDown @bind-Value="model.GenderId" Data="@genders" Name="Gender"
+                                    TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext" />
+                    <RadzenRequiredValidator Component="Gender" Text="Gender is required" Style="position: absolute" />
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="மாவட்டம்" />
+                </div>
+                <div class="col">
+                    <RadzenDropDown @bind-Value="model.DistrictId" Data="@districts" Name="District"
+                                    TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext" />
+                    <RadzenRequiredValidator Component="District" Text="District is required" Style="position: absolute" />
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="துயிலுமில்லம்" />
+                </div>
+                <div class="col">
+                    <RadzenDropDown @bind-Value="model.RestingHomeId" Data="@restingHomes" Name="RestingHome"
+                                    TextProperty="Name" ValueProperty="Id" AllowClear="true" class="form-control-plaintext" />
+                    <RadzenRequiredValidator Component="RestingHome" Text="RestingHome is required" Style="position: absolute" />
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="நிகழ்வு" />
+                </div>
+                <div class="col">
+                    <RadzenTextArea @bind-Value="model.Incident" Rows="3" class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 align-right">
+                    <RadzenLabel Text="மேலதிக விபரம்" />
+                </div>
+                <div class="col">
+                    <RadzenTextArea @bind-Value="model.Comment" Rows="3" class="form-control-plaintext" />
+                </div>
+            </div>
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Save"></RadzenButton>
+        </RadzenFieldset>
+    </RadzenTemplateForm>
+</form>
 }
 
 @code {
@@ -169,10 +171,28 @@ else
         }
     }
 
-    void OnSubmit(HeroAddOrUpdateViewModel model)
+    async Task OnSubmit(HeroAddOrUpdateViewModel model)
     {
-    //Console.WriteLine(JsonSerializer.Serialize(model, new JsonSerializerOptions() {  WriteIndented = true }));
-        HeroRepository.AddOrUpdate(model);
+        try
+        {
+            await HeroRepository.AddOrUpdate(model);
+            var message = new NotificationMessage {
+                Severity = NotificationSeverity.Success,
+                Summary = "Successfully updated!",
+                Duration = 4000 };
+            NotificationService.Notify(message);
+        }
+        catch
+        {
+
+            var message = new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Something went wrong!",
+                Duration = 4000
+            };
+            NotificationService.Notify(message);
+        }
     }
 
 }

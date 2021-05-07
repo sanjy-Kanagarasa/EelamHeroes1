@@ -253,3 +253,26 @@ p {
     overflow: hidden;
 }
 
+.page {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 1cm;
+    margin: 0.5 auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: #feff99;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.subpage {
+    padding: 0.5cm;
+    border: 4px red solid;
+    height: 276.8mm;
+    outline: 1cm #feff99 solid;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+

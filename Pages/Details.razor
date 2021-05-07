@@ -2,6 +2,9 @@
 @using EelamHeroes.Models.Dto
 @using AutoMapper
 @using EelamHeroes.Repository.Interface
+
+@inject IJSRuntime JsRuntime
+
 @inject IHeroRepository HeroRepository
 @inject IMapper Mapper
 
@@ -13,20 +16,30 @@ else
 {
     <div class="container">
         <div class="d-flex justify-content-center">
-            <div class="card mb-3 mt-4" style="max-width: 600px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="@($"images/hero/{@hero.Id}.jpg")" onerror="this.src='images/hero/default.jpg'" class="card-img" alt="...">
+            <div class="col-sm-12 col-md-6 col-lg-4 mt-3 m-1" style="border-style: solid;border-color: red; background: #feff99;">
+                <div class="row" style="border: 2px none red">
+                    <div class="col-sm-12 d-flex"><img style="max-height: 52px" class="img-fluid" src="img/veeravanakkam.png"></div>
+                </div>
+                <div class="row">
+                    <div class="col-8 offset-2" style="margin-bottom: 10px;">
+                        <img src="@($"images/hero/{@hero.Id}.jpg")" onerror="this.src='images/hero/default.jpg'" class="card-img img-fluid rounded mx-auto d-block" style="border: solid 3px black;" alt="...">
                     </div>
-                    <div class="col-md-8">
-                        <div class="card-body font-mukta">
-                            <h3 class="card-title">@hero.Rank @hero.Name</h3>
-                            <div class="card-text">
-                                <p >@hero.RealName</p>
-                                <p class="text-muted">@hero.Address</p>
-                            </div>
-
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 card-death" style="float:left">
+                        <p class="text-center mb-0" style="line-height: 1">வீரப்பிறப்பு</p>
+                        <p class="text-center mb-1">@(hero.BirthDate.HasValue ? hero.BirthDate?.ToString("dd-MM-yyyy") : "00-00-0000") </p>
+                    </div>
+                    <div class="col-6 card-birth" style="float:right">
+                        <p class="text-center mb-0" style="line-height: 1">வீரச்சாவு</p>
+                        <p class="text-center mb-1">@hero.DeathDate.ToString("dd-MM-yyyy")</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="text-center card-name"><spen style="font-family: 'Kavivanar', cursive; font-size: 16px;">@hero.Rank</spen> @hero.Name</p>
+                        <p class="text-center card-real-name">@hero.RealName&nbsp;</p>
+                        <p class="text-center card-address">@hero.Address</p>
                     </div>
                 </div>
             </div>
@@ -45,66 +58,136 @@ else
             </div>
         </AuthorizeView>
         <div class="d-flex justify-content-center">
-            <table class="table table-bordered" style="width: 75%">
+            <table class="table table-bordered">
                 <tbody class="font-mukta">
-                <tr>
-                    <td class="align-middle col-left">நிலை:</td>
-                    <td>@hero.Rank</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">இயக்கப் பெயர்:</td>
-                    <td>@hero.Name</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">இயற்பெயர்:</td>
-                    <td>@hero.RealName</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">பால்:</td>
-                    <td>@hero.Gender</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">முகவரி:</td>
-                    <td>@hero.Address</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">மாவட்டம்:</td>
-                    <td>@hero.District</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">வீரப்பிறப்பு:</td>
-                    <td>@hero.BirthDate?.ToString("dd/MM/yyyy")</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">வீரச்சாவு:</td>
-                    <td>@hero.DeathDate.ToString("dd/MM/yyyy")</td>
-                </tr>
-                <tr>
-                    <td class="align-middle col-left">நிகழ்வு:</td>
-                    <td>@hero.Incident</td>
-                </tr>
-                @if (!string.IsNullOrWhiteSpace((hero.RestingHome)))
-                {
                     <tr>
-                        <td class="align-middle col-left">துயிலுமில்லம்:</td>
-                        <td>@hero.RestingHome</td>
+                        <td class="align-middle col-left">நிலை:</td>
+                        <td>@hero.Rank</td>
                     </tr>
-                }
-                @if (!string.IsNullOrWhiteSpace((hero.Comment)))
-                {
-                    <tr >
-                        <td class="align-middle col-left">மேலதிக விபரம்:</td>
-                        <td>@hero.Comment</td>
+                    <tr>
+                        <td class="align-middle col-left">இயக்கப் பெயர்:</td>
+                        <td>@hero.Name</td>
                     </tr>
-                }
+                    <tr>
+                        <td class="align-middle col-left">இயற்பெயர்:</td>
+                        <td>@hero.RealName</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle col-left">பால்:</td>
+                        <td>@hero.Gender</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle col-left">முகவரி:</td>
+                        <td>@hero.Address</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle col-left">மாவட்டம்:</td>
+                        <td>@hero.District</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle col-left">வீரப்பிறப்பு:</td>
+                        <td>@hero.BirthDate?.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle col-left">வீரச்சாவு:</td>
+                        <td>@hero.DeathDate.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle col-left">நிகழ்வு:</td>
+                        <td>@hero.Incident</td>
+                    </tr>
+                    @if (!string.IsNullOrWhiteSpace((hero.RestingHome)))
+                    {
+                        <tr>
+                            <td class="align-middle col-left">துயிலுமில்லம்:</td>
+                            <td>@hero.RestingHome</td>
+                        </tr>
+                    }
+                    @if (!string.IsNullOrWhiteSpace((hero.Comment)))
+                    {
+                        <tr>
+                            <td class="align-middle col-left">மேலதிக விபரம்:</td>
+                            <td>@hero.Comment</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
+        @*<button class="btn btn-primary" @onclick="ConvertHTMLToPDF">Download frame</button>*@
+
+        @*<div id="capture" class="m-1" style="border-style: solid;border-color: transparent; background: #feff99;">
+                <div class="m-sm-2 m-md-3 m-lg-5" style="border-style: solid;border-color: red; background: #feff99;">
+                    <div class="row" style="border: 2px none red">
+                        <div class="col-sm-12 d-flex"><img class="img-fluid" src="img/veeravanakkam.png"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 offset-2" style="margin-bottom: 10px;">
+                            <img src="@($"images/hero/{@hero.Id}.jpg")" onerror="this.src='images/hero/default.jpg'" class="card-img img-fluid rounded mx-auto d-block" alt="...">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 card-death" style="float:left; font-size: 1.3rem;">
+                            <p class="text-center mb-0" style="line-height: 1">வீரப்பிறப்பு</p>
+                            <p class="text-center mb-1">@(hero.BirthDate.HasValue ? hero.BirthDate?.ToString("dd-MM-yyyy") : "00-00-0000") </p>
+                        </div>
+                        <div class="col-6 card-birth" style="float:right;  font-size: 1.3rem;">
+                            <p class="text-center mb-0" style="line-height: 1">வீரச்சாவு</p>
+                            <p class="text-center mb-1">@hero.DeathDate.ToString("dd-MM-yyyy")</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-center card-name" style="font-size: 2rem;">@hero.Rank @hero.Name</p>
+                            <p class="text-center card-real-name" style="font-size: 1.3rem;">@hero.RealName&nbsp;</p>
+                            <p class="text-center card-address" style="font-size: 1.3rem;">@hero.Address</p>
+                            <p class="text-center card-address" style="font-size: 1rem;">@hero.Incident</p>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        @*<div id="page">
+            @if (isPrinting)
+            {
+                <div class="page">
+                    <div class="subpage">
+                        <div class="row" style="border: 2px none red">
+                            <div class="col-sm-12 d-flex"><img class="img-fluid" src="img/veeravanakkam.png"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8 offset-2" style="margin-bottom: 10px; margin-top: 20px;">
+                                <img src="@($"images/hero/{@hero.Id}.jpg")" onerror="this.src='images/hero/default.jpg'" class="card-img img-fluid rounded mx-auto d-block" style="border: solid 3px black;" alt="...">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 card-death-print" style="float:left;">
+                                <p class="text-center mb-0" style="line-height: 1">வீரப்பிறப்பு</p>
+                                <p class="text-center mb-1">@(hero.BirthDate.HasValue ? hero.BirthDate?.ToString("dd-MM-yyyy") : "00-00-0000") </p>
+                            </div>
+                            <div class="col-6 card-birth-print" style="float:right;">
+                                <p class="text-center mb-0" style="line-height: 1">வீரச்சாவு</p>
+                                <p class="text-center mb-1">@hero.DeathDate.ToString("dd-MM-yyyy")</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="text-center card-name-print"><spen style="font-family: 'Kavivanar', cursive; font-size: 30px;">@hero.Rank</spen> @hero.Name</p>
+                                <p class="text-center card-real-name-print">@hero.RealName&nbsp;</p>
+                                <p class="text-center card-address-print">@hero.Address</p>
+                                <p class="text-center card-incident-print">@hero.Incident</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>*@
+
+
     </div>
 }
-
 @code {
     HeroDetailsDto hero;
+    bool isPrinting = true;
 
     [Parameter]
     public string HeroId { get; set; }
@@ -112,6 +195,18 @@ else
     protected override async Task OnInitializedAsync()
     {
         hero = Mapper.Map<HeroDetailsDto>(await HeroRepository.GetById(int.Parse(HeroId)));
+    }
+    private async Task ConvertHTMLToPDF()
+    {
+        isPrinting = true;
+        await JsRuntime.InvokeVoidAsync("SaveImage", "page");
+        isPrinting = false;
+        //isPrinting = false;
+        /*var imageBytes = await JsRuntime.InvokeAsync<string>("GetImageData", "capturedImage", "image/jpeg");
+        itemSrc = imageBytes;
+        var data = Convert.FromBase64String(imageBytes); // get the image as byte array
+
+        JsRuntime.SaveAs("HTMLToPDF.pdf", data);*/
     }
 
 }

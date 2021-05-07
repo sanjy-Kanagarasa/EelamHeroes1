@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -19,7 +22,15 @@ namespace EelamHeroes.Controller
         {
             this.environment = environment;
         }
-       
+
+        [HttpGet("pdf")]
+        public IActionResult GetPdf()
+        {
+            //CreateImage();
+
+            return Ok();
+        }
+
         [HttpPost("upload/single")]
         public IActionResult Single(IFormFile file)
         {
@@ -95,16 +106,17 @@ namespace EelamHeroes.Controller
         private string UploadFileToUrl(IFormFile file, string folderPath, string fileName)
         {
             var folder = Path.Combine(environment.WebRootPath, folderPath);
-            Directory.CreateDirectory(folder);
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
             var filePath = Path.Combine(folder, fileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 file.CopyTo(stream);
             }
 
-            var pathToDatabase =  Path.Combine(folderPath, fileName);
+            var pathToDatabase = Path.Combine(folderPath, fileName);
             return pathToDatabase;
-            
+
         }
     }
 }

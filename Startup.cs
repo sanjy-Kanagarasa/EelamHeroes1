@@ -56,6 +56,9 @@ namespace EelamHeroes
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
             services.AddSyncfusionBlazor();
+            services.AddSignalR(e => {
+                e.MaximumReceiveMessageSize = 102400000;
+            });
             //services.Configure<IdentityOptions>(opt => { });
             services.ConfigureApplicationCookie(opt =>
             {
